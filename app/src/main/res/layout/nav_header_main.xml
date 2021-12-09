@@ -13,6 +13,7 @@
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
     <TextView
+        android:id="@+id/tvNombreUsuario"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:paddingTop="@dimen/nav_header_vertical_spacing"
@@ -22,7 +23,7 @@
         android:textSize="20sp" />
 
     <TextView
-        android:id="@+id/textView"
+        android:id="@+id/tvCorreoUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Bienvenido a SEDIT mobile app"

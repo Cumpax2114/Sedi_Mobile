@@ -2,15 +2,24 @@ package dev.franklinbg.sedimobile.activity
 
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.widget.TextView
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
+import androidx.preference.PreferenceManager
+import cn.pedant.SweetAlert.SweetAlertDialog
 import com.google.android.material.navigation.NavigationView
+import com.google.gson.GsonBuilder
+import de.hdodenhof.circleimageview.CircleImageView
 import dev.franklinbg.sedimobile.R
 import dev.franklinbg.sedimobile.databinding.ActivityHomeBinding
+import dev.franklinbg.sedimobile.model.Usuario
+import dev.franklinbg.sedimobile.utils.DateSerializer
+import dev.franklinbg.sedimobile.utils.UsuarioContainer
+import java.util.*
 
 class HomeActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
@@ -35,9 +44,47 @@ class HomeActivity : AppCompatActivity() {
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
         navView.setupWithNavController(navController)
+        loadUserData()
     }
+
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment_content_main)
         return navController.navigateUp(appBarConfiguration) || super.onSupportNavigateUp()
+    }
+
+    private fun loadUserData() {
+        val headerView = binding.navView.getHeaderView(0)
+
+        if (UsuarioContainer.currentUser != null) {
+            val user = UsuarioContainer.currentUser!!
+            val gson = GsonBuilder()
+                .registerTypeAdapter(Date::class.java, DateSerializer())
+                .create()
+            headerView.findViewById<TextView>(R.id.tvNombreUsuario).text =
+                "¡Hola, ${user.nombre}"
+            headerView.findViewById<TextView>(R.id.tvCorreoUsuario).text = user.correo
+        }
+    }
+
+    override fun onBackPressed() {
+        SweetAlertDialog(
+            this,
+            SweetAlertDialog.WARNING_TYPE
+        ).setTitleText("Has oprimido el botón atrás")
+            .setContentText("¿Quieres cerrar sesión?")
+            .setCancelText("No, Cancelar!").setConfirmText("Sí, Cerrar")
+            .showCancelButton(true).setCancelClickListener { sDialog: SweetAlertDialog ->
+                sDialog.dismissWithAnimation()
+                SweetAlertDialog(
+                    this,
+                    SweetAlertDialog.ERROR_TYPE
+                ).setTitleText("Operación cancelada")
+                    .setContentText("No has cerrado sesión")
+                    .show()
+            }.setConfirmClickListener { sweetAlertDialog: SweetAlertDialog ->
+                UsuarioContainer.currentUser = null
+                sweetAlertDialog.dismissWithAnimation()
+                finish()
+            }.show()
     }
 }

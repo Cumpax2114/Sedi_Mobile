@@ -6,6 +6,7 @@
     android:layout_height="match_parent"
     android:orientation="vertical"
     tools:context=".activity.LoginActivity">
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -24,13 +25,21 @@
             android:textSize="24dp"
             android:textStyle="bold" />
 
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/imgLogo"
+            android:layout_width="250dp"
+            android:layout_height="100dp"
+            android:layout_below="@id/titulo"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="30dp"
+            android:src="@mipmap/ic_launcher" />
+
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/tiEmail"
             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/titulo"
+            android:layout_below="@id/imgLogo"
             android:layout_marginTop="26dp"
             android:focusedByDefault="false"
             android:hint="E-mail">
@@ -61,6 +70,7 @@
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
     </RelativeLayout>
+
     <RelativeLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,11 +79,11 @@
         android:paddingEnd="25dp">
 
         <com.google.android.material.button.MaterialButton
+            android:backgroundTint="@color/yellow"
             android:id="@+id/btnIniciarSesion"
             android:layout_width="match_parent"
             android:layout_height="65dp"
             android:text="Iniciar Sesión"
-            android:textColor="#fff"
             android:textSize="15dp" />
     </RelativeLayout>
 </LinearLayout>
