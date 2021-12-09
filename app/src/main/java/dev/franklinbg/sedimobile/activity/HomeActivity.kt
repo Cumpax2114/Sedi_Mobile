@@ -57,9 +57,6 @@ class HomeActivity : AppCompatActivity() {
 
         if (UsuarioContainer.currentUser != null) {
             val user = UsuarioContainer.currentUser!!
-            val gson = GsonBuilder()
-                .registerTypeAdapter(Date::class.java, DateSerializer())
-                .create()
             headerView.findViewById<TextView>(R.id.tvNombreUsuario).text =
                 "¡Hola, ${user.nombre}"
             headerView.findViewById<TextView>(R.id.tvCorreoUsuario).text = user.correo
