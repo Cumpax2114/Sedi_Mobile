@@ -13,17 +13,17 @@
         android:layout_margin="15dp" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/btnNewIdea"
-        android:textColor="?attr/colorOnSurface"
-        app:iconTint="@color/black"
+        android:id="@+id/btnNewClient"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
         android:layout_margin="16dp"
         android:backgroundTint="@color/yellow"
-        android:contentDescription="Ingresa aquí tu nueva sugerencia"
+        android:contentDescription="Nuevo cliente"
         android:elevation="6dp"
-        android:text="Nueva Sugerencia"
+        android:text="Nuevo Cliente"
+        android:textColor="?attr/colorOnSurface"
         android:textSize="16sp"
-        app:icon="@drawable/ic_add" />
+        app:icon="@drawable/ic_add"
+        app:iconTint="@color/black" />
 </androidx.coordinatorlayout.widget.CoordinatorLayout>
