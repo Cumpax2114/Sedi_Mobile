@@ -55,7 +55,7 @@
                             android:orientation="horizontal">
 
                             <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/txtInputTipoDoc"
+                                android:id="@+id/tiTipoDoc"
                                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -66,14 +66,13 @@
                                     android:id="@+id/dropdown_tipoDoc"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:clickable="true"
                                     android:hint="Tipo de Identificación"
                                     android:inputType="none"
                                     android:textSize="15sp" />
                             </com.google.android.material.textfield.TextInputLayout>
 
                             <com.google.android.material.textfield.TextInputLayout
-                                android:id="@+id/txtInputDNI"
+                                android:id="@+id/tiNumeroDoc"
                                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                                 android:layout_width="0dp"
                                 android:layout_height="wrap_content"
@@ -85,64 +84,83 @@
                                     android:id="@+id/edtNumeroDoc"
                                     android:layout_width="match_parent"
                                     android:layout_height="wrap_content"
-                                    android:enabled="true"
                                     android:hint="Ingrese su número de documento *"
+                                    android:imeOptions="actionSearch"
                                     android:inputType="number"
-                                    android:maxLength="11"
+                                    android:maxLength="20"
                                     android:textSize="15sp" />
                             </com.google.android.material.textfield.TextInputLayout>
                         </LinearLayout>
 
+                        <LinearLayout
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:layout_marginTop="10dp"
+                            android:layout_marginBottom="10dp"
+                            android:gravity="center"
+                            android:orientation="horizontal">
+
+                            <com.google.android.material.button.MaterialButton
+                                android:id="@+id/btnSearch"
+                                style="@style/Widget.MaterialComponents.Button"
+                                android:layout_width="match_parent"
+                                android:layout_height="wrap_content"
+                                android:drawableEnd="@drawable/ic_search"
+                                android:drawableTint="@color/white"
+                                android:text="Buscar"
+                                android:textColor="@color/white" />
+                        </LinearLayout>
+
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/txtInputNombres"
+                            android:id="@+id/tiNombres"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:enabled="false"
                             app:startIconDrawable="@drawable/ic_person">
 
                             <com.google.android.material.textfield.TextInputEditText
-                                android:id="@+id/edtInputNombres"
+                                android:id="@+id/edtNombres"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:enabled="true"
                                 android:hint="Ingrese nombre"
                                 android:inputType="text" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/txtInputDireccion"
+                            android:id="@+id/tiDireccion"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:enabled="false"
                             app:startIconDrawable="@drawable/ic_direccion">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/edtDireccion"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:enabled="true"
                                 android:hint="Dirección"
                                 android:inputType="text" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/txtInputUbigeo"
+                            android:id="@+id/tiUbigeo"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
+                            android:enabled="false"
                             app:startIconDrawable="@drawable/ic_direccion">
 
                             <com.google.android.material.textfield.TextInputEditText
                                 android:id="@+id/edtUbigeo"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:enabled="true"
                                 android:hint="Ubigeo"
                                 android:inputType="text" />
                         </com.google.android.material.textfield.TextInputLayout>
 
                         <com.google.android.material.textfield.TextInputLayout
-                            android:id="@+id/txtInputTelefono"
+                            android:id="@+id/tiTelefono"
                             style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -152,11 +170,11 @@
                                 android:id="@+id/edtTelefono"
                                 android:layout_width="match_parent"
                                 android:layout_height="wrap_content"
-                                android:enabled="true"
                                 android:hint="Teléfono"
                                 android:inputType="phone"
                                 android:maxLength="20" />
                         </com.google.android.material.textfield.TextInputLayout>
+
                         <LinearLayout
                             android:layout_width="match_parent"
                             android:layout_height="wrap_content"
@@ -164,6 +182,7 @@
                             android:layout_marginBottom="10dp"
                             android:gravity="center"
                             android:orientation="horizontal">
+
                             <com.google.android.material.button.MaterialButton
                                 android:id="@+id/btnRegistrarse"
                                 style="@style/Widget.MaterialComponents.Button"

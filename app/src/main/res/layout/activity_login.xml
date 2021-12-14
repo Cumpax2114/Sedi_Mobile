@@ -79,10 +79,10 @@
         android:paddingEnd="25dp">
 
         <com.google.android.material.button.MaterialButton
-            android:backgroundTint="@color/yellow"
             android:id="@+id/btnIniciarSesion"
             android:layout_width="match_parent"
             android:layout_height="65dp"
+            android:backgroundTint="@color/yellow"
             android:text="Iniciar Sesión"
             android:textSize="15dp" />
     </RelativeLayout>

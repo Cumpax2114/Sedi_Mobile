@@ -8,10 +8,12 @@ import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import java.util.concurrent.TimeUnit
 import java.util.Date
+
 class ConfigApi private constructor() {
     companion object {
         private const val baseUrl = "http://10.0.2.2:8089"
         var usuarioApi: UsuarioApi
+        var clienteApi: ClienteApi
 
         init {
             val gson = GsonBuilder()
@@ -25,6 +27,7 @@ class ConfigApi private constructor() {
                 .client(getClient())
                 .build()
             usuarioApi = retrofit.create(UsuarioApi::class.java)
+            clienteApi = retrofit.create(ClienteApi::class.java)
         }
 
         private fun getClient(): OkHttpClient {
