@@ -14,6 +14,8 @@ class ConfigApi private constructor() {
         private const val baseUrl = "http://10.0.2.2:8089"
         var usuarioApi: UsuarioApi
         var clienteApi: ClienteApi
+        var cajaApi: CajaApi
+        var metodoPagoApi: MetodoPagoApi
 
         init {
             val gson = GsonBuilder()
@@ -28,6 +30,8 @@ class ConfigApi private constructor() {
                 .build()
             usuarioApi = retrofit.create(UsuarioApi::class.java)
             clienteApi = retrofit.create(ClienteApi::class.java)
+            cajaApi = retrofit.create(CajaApi::class.java)
+            metodoPagoApi = retrofit.create(MetodoPagoApi::class.java)
         }
 
         private fun getClient(): OkHttpClient {

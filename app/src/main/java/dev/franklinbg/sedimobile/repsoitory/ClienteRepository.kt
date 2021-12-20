@@ -28,7 +28,6 @@ class ClienteRepository {
                         TIPO_RESULT,
                         RPTA_ERROR,
                         "internal exception:${t.message!!}",
-                        null
                     )
             }
         }
