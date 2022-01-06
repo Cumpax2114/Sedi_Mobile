@@ -5,6 +5,8 @@ public class DetalleCaja {
     private Caja caja;
     private MetodoPago metodoPago;
     private double monto;
+    private double montoCierre;
+    private boolean cerrado;
 
     public int getId() {
         return id;
@@ -36,5 +38,21 @@ public class DetalleCaja {
 
     public void setMonto(double monto) {
         this.monto = monto;
+    }
+
+    public double getMontoCierre() {
+        return montoCierre;
+    }
+
+    public void setMontoCierre(double montoCierre) {
+        this.montoCierre = montoCierre;
+    }
+
+    public boolean isCerrado() {
+        return cerrado;
+    }
+
+    public void setCerrado(boolean cerrado) {
+        this.cerrado = cerrado;
     }
 }

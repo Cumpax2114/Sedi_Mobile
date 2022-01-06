@@ -9,4 +9,5 @@ import dev.franklinbg.sedimobile.utils.GenericResponse
 class ClienteViewModel : ViewModel() {
     val repository = ClienteRepository()
     fun save(cliente: Cliente): LiveData<GenericResponse<Cliente>> = repository.save(cliente)
+    fun listAll(): LiveData<GenericResponse<ArrayList<Cliente>>> = repository.listAll()
 }

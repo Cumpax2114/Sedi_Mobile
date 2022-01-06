@@ -1,10 +1,8 @@
 package dev.franklinbg.sedimobile.model;
 
-public class MetodoPago {
+public class ConceptoMovCaja {
     private int id;
     private String nombre;
-    private String numeroCuenta;
-    private String cci;
     private char estado;
 
     public int getId() {
@@ -21,22 +19,6 @@ public class MetodoPago {
 
     public void setNombre(String nombre) {
         this.nombre = nombre;
-    }
-
-    public String getNumeroCuenta() {
-        return numeroCuenta;
-    }
-
-    public void setNumeroCuenta(String numeroCuenta) {
-        this.numeroCuenta = numeroCuenta;
-    }
-
-    public String getCci() {
-        return cci;
-    }
-
-    public void setCci(String cci) {
-        this.cci = cci;
     }
 
     public char getEstado() {

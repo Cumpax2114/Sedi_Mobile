@@ -1,6 +1,7 @@
 package dev.franklinbg.sedimobile.api
 
 import dev.franklinbg.sedimobile.model.Caja
+import dev.franklinbg.sedimobile.model.MovCaja
 import dev.franklinbg.sedimobile.model.dto.CajaWithDetallesDTO
 import dev.franklinbg.sedimobile.utils.GenericResponse
 import retrofit2.Call
@@ -19,4 +20,6 @@ interface CajaApi {
 
     @POST("${base}/open")
     fun open(@Body dto: CajaWithDetallesDTO): Call<GenericResponse<CajaWithDetallesDTO>>
+    @POST("${base}/movimiento")
+    fun saveMovimiento(@Body movCaja:MovCaja):Call<GenericResponse<MovCaja>>
 }

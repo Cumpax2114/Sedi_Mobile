@@ -4,6 +4,7 @@ import dev.franklinbg.sedimobile.model.Cliente
 import dev.franklinbg.sedimobile.utils.GenericResponse
 import retrofit2.Call
 import retrofit2.http.Body
+import retrofit2.http.GET
 import retrofit2.http.POST
 
 interface ClienteApi {
@@ -13,4 +14,7 @@ interface ClienteApi {
 
     @POST(base)
     fun save(@Body cliente: Cliente): Call<GenericResponse<Cliente>>
+
+    @GET(base)
+    fun listAll(): Call<GenericResponse<ArrayList<Cliente>>>
 }

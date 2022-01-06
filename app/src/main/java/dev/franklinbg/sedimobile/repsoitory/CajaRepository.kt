@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dev.franklinbg.sedimobile.api.ConfigApi
 import dev.franklinbg.sedimobile.model.Caja
+import dev.franklinbg.sedimobile.model.MovCaja
 import dev.franklinbg.sedimobile.model.dto.CajaWithDetallesDTO
 import dev.franklinbg.sedimobile.utils.GenericResponse
 import dev.franklinbg.sedimobile.utils.Global
@@ -33,7 +34,7 @@ class CajaRepository {
             }
 
         })
-        return mld;
+        return mld
     }
 
     fun open(dto: CajaWithDetallesDTO): LiveData<GenericResponse<CajaWithDetallesDTO>> {
@@ -56,6 +57,29 @@ class CajaRepository {
             }
 
         })
-        return mld;
+        return mld
+    }
+
+    fun saveMovimiento(movCaja: MovCaja): LiveData<GenericResponse<MovCaja>> {
+        val mld = MutableLiveData<GenericResponse<MovCaja>>()
+        api.saveMovimiento(movCaja).enqueue(object : Callback<GenericResponse<MovCaja>> {
+            override fun onResponse(
+                call: Call<GenericResponse<MovCaja>>,
+                response: Response<GenericResponse<MovCaja>>
+            ) {
+                mld.value = response.body()
+            }
+
+            override fun onFailure(call: Call<GenericResponse<MovCaja>>, t: Throwable) {
+                mld.value =
+                    GenericResponse(
+                        Global.TIPO_RESULT,
+                        Global.RPTA_ERROR,
+                        "internal exception:${t.message!!}",
+                    )
+            }
+
+        })
+        return mld
     }
 }

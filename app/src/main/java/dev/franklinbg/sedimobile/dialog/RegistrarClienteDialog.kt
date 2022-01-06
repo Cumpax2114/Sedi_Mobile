@@ -203,34 +203,82 @@ class RegistrarClienteDialog : DialogFragment() {
     }
 
     private fun save() {
-        if (validated) {
-            if (binding.edtTelefono.text!!.toString().isNotEmpty()) {
-                val c = Cliente()
-                with(c) {
-                    with(binding) {
-                        documento = edtNumeroDoc.text.toString()
-                        nombre = edtNombres.text.toString()
-                        direccion = edtDireccion.text.toString()
-                        ubigeo = edtUbigeo.text.toString()
-                        telefono = edtTelefono.text.toString()
-                    }
-                }
-                viewModel.save(c).observe(viewLifecycleOwner, {
-                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                    if (it.rpta == 1) {
-                        dismiss()
-                    }
-                })
-            } else {
-                activateError(binding.tiTelefono)
-            }
+        if (indexTd == 2) {
+           if(validateOtroDocumento()){
+               val c = Cliente()
+               with(c) {
+                   with(binding) {
+                       documento = edtNumeroDoc.text.toString()
+                       nombre = edtNombres.text.toString()
+                       direccion = edtDireccion.text.toString()
+                       ubigeo = edtUbigeo.text.toString()
+                       telefono = edtTelefono.text.toString()
+                   }
+               }
+               viewModel.save(c).observe(viewLifecycleOwner, {
+                   Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                   if (it.rpta == 1) {
+                       dismiss()
+                   }
+               })
+           }
         } else {
-            Toast.makeText(
-                requireContext(),
-                "debes de validar primero tus datos",
-                Toast.LENGTH_SHORT
-            ).show()
+            if (validated) {
+                if (binding.edtTelefono.text!!.toString().isNotEmpty()) {
+                    val c = Cliente()
+                    with(c) {
+                        with(binding) {
+                            documento = edtNumeroDoc.text.toString()
+                            nombre = edtNombres.text.toString()
+                            direccion = edtDireccion.text.toString()
+                            ubigeo = edtUbigeo.text.toString()
+                            telefono = edtTelefono.text.toString()
+                        }
+                    }
+                    viewModel.save(c).observe(viewLifecycleOwner, {
+                        Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                        if (it.rpta == 1) {
+                            dismiss()
+                        }
+                    })
+                } else {
+                    activateError(binding.tiTelefono)
+                }
+            } else {
+                Toast.makeText(
+                    requireContext(),
+                    "debes de validar primero tus datos",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
         }
+    }
+
+    private fun validateOtroDocumento(): Boolean {
+        var valid = true
+        with(binding) {
+            if (edtNumeroDoc.text!!.isEmpty()) {
+                valid = false
+                activateError(tiNumeroDoc)
+            }
+            if (edtNombres.text!!.isEmpty()) {
+                valid = false
+                activateError(tiNombres)
+            }
+            if (edtDireccion.text!!.isEmpty()) {
+                valid = false
+                activateError(tiDireccion)
+            }
+            if (edtUbigeo.text!!.isEmpty()) {
+                valid = false
+                activateError(tiUbigeo)
+            }
+            if (edtTelefono.text!!.isEmpty()) {
+                valid = false
+                activateError(tiTelefono)
+            }
+        }
+        return valid
     }
 
     private fun addTextWatcher(til: TextInputLayout, edt: EditText) {

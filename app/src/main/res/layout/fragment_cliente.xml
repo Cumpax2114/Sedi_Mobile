@@ -9,7 +9,7 @@
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvClientes"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
+        android:layout_height="wrap_content"
         android:layout_margin="15dp" />
 
     <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
@@ -17,11 +17,10 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="bottom|right"
-        android:layout_margin="16dp"
         android:backgroundTint="@color/yellow"
         android:contentDescription="Nuevo cliente"
         android:elevation="6dp"
-        android:text="Nuevo Cliente"
+        android:text="Nuevo"
         android:textColor="?attr/colorOnSurface"
         android:textSize="16sp"
         app:icon="@drawable/ic_add"
