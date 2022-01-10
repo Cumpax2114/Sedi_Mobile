@@ -25,7 +25,6 @@ import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 import kotlinx.coroutines.withContext
 import android.app.Activity
-import android.content.DialogInterface
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import dev.franklinbg.sedimobile.model.Cliente
