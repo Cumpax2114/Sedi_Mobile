@@ -46,4 +46,9 @@ public class MetodoPago {
     public void setEstado(char estado) {
         this.estado = estado;
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

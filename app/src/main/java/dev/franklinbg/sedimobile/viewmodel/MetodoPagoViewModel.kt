@@ -8,5 +8,5 @@ import dev.franklinbg.sedimobile.utils.GenericResponse
 
 class MetodoPagoViewModel : ViewModel() {
     val repository = MetodoPagoRepository()
-    fun getAll(): LiveData<GenericResponse<ArrayList<MetodoPago>>> = repository.getAll()
+    fun listActivos(): LiveData<GenericResponse<ArrayList<MetodoPago>>> = repository.listActivos()
 }

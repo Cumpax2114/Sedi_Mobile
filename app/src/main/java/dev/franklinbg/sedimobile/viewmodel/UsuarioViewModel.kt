@@ -10,4 +10,6 @@ class UsuarioViewModel : ViewModel() {
     private val repository = UsuarioRepository()
     fun login(email: String, password: String): LiveData<GenericResponse<Usuario>> =
         repository.login(email, password)
+
+    fun listAll(): LiveData<GenericResponse<ArrayList<Usuario>>> = repository.listAll()
 }

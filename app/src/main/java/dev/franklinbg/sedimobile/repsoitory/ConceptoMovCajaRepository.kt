@@ -3,27 +3,27 @@ package dev.franklinbg.sedimobile.repsoitory
 import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import dev.franklinbg.sedimobile.api.ConfigApi
-import dev.franklinbg.sedimobile.model.MetodoPago
+import dev.franklinbg.sedimobile.model.ConceptoMovCaja
 import dev.franklinbg.sedimobile.utils.GenericResponse
 import dev.franklinbg.sedimobile.utils.Global
 import retrofit2.Call
 import retrofit2.Callback
 import retrofit2.Response
 
-class MetodoPagoRepository {
-    val api = ConfigApi.metodoPagoApi
-    fun listActivos(): LiveData<GenericResponse<ArrayList<MetodoPago>>> {
-        val mld = MutableLiveData<GenericResponse<ArrayList<MetodoPago>>>()
-        api.listActivos().enqueue(object : Callback<GenericResponse<ArrayList<MetodoPago>>> {
+class ConceptoMovCajaRepository {
+    val api = ConfigApi.conceptoMovCajaApi
+    fun listActivos(): LiveData<GenericResponse<ArrayList<ConceptoMovCaja>>> {
+        val mld = MutableLiveData<GenericResponse<ArrayList<ConceptoMovCaja>>>()
+        api.listActivos().enqueue(object : Callback<GenericResponse<ArrayList<ConceptoMovCaja>>> {
             override fun onResponse(
-                call: Call<GenericResponse<ArrayList<MetodoPago>>>,
-                response: Response<GenericResponse<ArrayList<MetodoPago>>>
+                call: Call<GenericResponse<ArrayList<ConceptoMovCaja>>>,
+                response: Response<GenericResponse<ArrayList<ConceptoMovCaja>>>
             ) {
                 mld.value = response.body()
             }
 
             override fun onFailure(
-                call: Call<GenericResponse<ArrayList<MetodoPago>>>,
+                call: Call<GenericResponse<ArrayList<ConceptoMovCaja>>>,
                 t: Throwable
             ) {
                 mld.value = GenericResponse(
@@ -34,6 +34,6 @@ class MetodoPagoRepository {
             }
 
         })
-        return mld
+        return mld;
     }
 }

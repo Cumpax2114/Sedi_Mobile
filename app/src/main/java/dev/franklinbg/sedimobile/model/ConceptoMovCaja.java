@@ -1,5 +1,7 @@
 package dev.franklinbg.sedimobile.model;
 
+import androidx.annotation.NonNull;
+
 public class ConceptoMovCaja {
     private int id;
     private String nombre;
@@ -27,5 +29,11 @@ public class ConceptoMovCaja {
 
     public void setEstado(char estado) {
         this.estado = estado;
+    }
+
+    @NonNull
+    @Override
+    public String toString() {
+        return nombre;
     }
 }

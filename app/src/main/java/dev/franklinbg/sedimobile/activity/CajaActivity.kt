@@ -68,14 +68,14 @@ class CajaActivity : AppCompatActivity(), AddDetailCommunication {
                 }
 
             })
-            metodoPagoViewModel.getAll().observe(this, {
+            metodoPagoViewModel.listActivos().observe(this) {
                 if (it.rpta == 1) {
                     metodosPago = it.body!!
                     adapter.updateItems(it.body!!)
                 } else {
                     Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                 }
-            })
+            }
         } else {
             finish()
         }
@@ -83,7 +83,7 @@ class CajaActivity : AppCompatActivity(), AddDetailCommunication {
 
     private fun showData() {
         val simpleDatFormat = SimpleDateFormat("dd/MM/yyyy HH:mm:ss", Locale.ENGLISH)
-        simpleDatFormat.timeZone= TimeZone.getTimeZone("America/Lima")
+        simpleDatFormat.timeZone = TimeZone.getTimeZone("America/Lima")
         with(binding) {
             tvFechaApertura.text = simpleDatFormat.format(currentCaja!!.fechaApertura)
             tvFechaCierre.text = simpleDatFormat.format(currentCaja!!.fechaCierre)
