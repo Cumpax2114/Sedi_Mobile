@@ -9,7 +9,7 @@ import dev.franklinbg.sedimobile.model.Cliente
 
 class ClienteMovCajaAdapter(private val communication: SeleccionePersonaDialogCommunication) :
     RecyclerView.Adapter<ClienteMovCajaAdapter.ViewHolder>() {
-    val clientes = ArrayList<Cliente>()
+    private val clientes = ArrayList<Cliente>()
 
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): ViewHolder = ViewHolder(

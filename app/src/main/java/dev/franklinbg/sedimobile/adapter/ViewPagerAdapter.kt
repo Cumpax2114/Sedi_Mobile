@@ -20,8 +20,8 @@ class ViewPagerAdapter(
     override fun createFragment(position: Int): Fragment {
         return when (position) {
             0 -> MovCajaSelectClienteFragment(communication)
-            1 -> MovCajaSelectTrabajadorFragment()
-            else -> MovCajaSelectProveedorFragment()
+            1 -> MovCajaSelectProveedorFragment(communication)
+            else -> MovCajaSelectTrabajadorFragment()
         }
     }
 }

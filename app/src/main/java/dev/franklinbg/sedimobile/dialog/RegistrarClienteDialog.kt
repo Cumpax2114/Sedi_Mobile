@@ -13,7 +13,6 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.core.widget.addTextChangedListener
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
 import com.google.android.material.textfield.TextInputLayout
 import dev.franklinbg.sedimobile.R
 import dev.franklinbg.sedimobile.databinding.DialogRegistrarClienteBinding
@@ -21,10 +20,9 @@ import dev.franklinbg.sedimobile.utils.SunatEmpresa
 import dev.franklinbg.sedimobile.utils.ReniecPerson
 import dev.franklinbg.sedimobile.viewmodel.search.BuscarPorDNIViewModel
 import dev.franklinbg.sedimobile.viewmodel.search.BuscarPorRUCViewModel
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.launch
-import kotlinx.coroutines.withContext
 import android.app.Activity
+import android.os.Handler
+import android.os.Looper
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import dev.franklinbg.sedimobile.model.Cliente
@@ -104,30 +102,25 @@ class RegistrarClienteDialog : DialogFragment() {
                                         text = "Espere un momento . . ."
                                         isEnabled = false
                                     }
-                                    AsyncTask.execute {
-                                        Thread.sleep(3000)
-                                        lifecycleScope.launch {
-                                            withContext(Dispatchers.Main) {
-                                                searchDNIViewModel.find(edtNumeroDoc.text.toString())
-                                                    .observe(viewLifecycleOwner, {
-                                                        if (it.success) {
-                                                            validated = true
-                                                            showData(it.data!!)
-                                                        } else {
-                                                            Toast.makeText(
-                                                                requireContext(),
-                                                                it.message,
-                                                                Toast.LENGTH_SHORT
-                                                            ).show()
-                                                        }
-                                                        with(btnSearch) {
-                                                            text = "Buscar"
-                                                            isEnabled = true
-                                                        }
-                                                    })
+                                    Handler(Looper.getMainLooper()).postDelayed({
+                                        searchDNIViewModel.find(edtNumeroDoc.text.toString())
+                                            .observe(viewLifecycleOwner) {
+                                                if (it.success) {
+                                                    validated = true
+                                                    showData(it.data!!)
+                                                } else {
+                                                    Toast.makeText(
+                                                        requireContext(),
+                                                        it.message,
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                }
+                                                with(btnSearch) {
+                                                    text = "Buscar"
+                                                    isEnabled = true
+                                                }
                                             }
-                                        }
-                                    }
+                                    }, 3000)
                                 } else {
                                     activateError(tiNumeroDoc, "DNI no válido")
                                 }
@@ -138,31 +131,25 @@ class RegistrarClienteDialog : DialogFragment() {
                                         text = "Espere un momento . . ."
                                         isEnabled = false
                                     }
-                                    AsyncTask.execute {
-                                        Thread.sleep(3000)
-                                        lifecycleScope.launch {
-                                            withContext(Dispatchers.Main) {
-                                                searchRUCViewModel.find(edtNumeroDoc.text.toString())
-                                                    .observe(viewLifecycleOwner, {
-                                                        if (it.success) {
-                                                            validated = true
-                                                            showData(it.data!!)
-                                                        } else {
-                                                            Toast.makeText(
-                                                                requireContext(),
-                                                                it.message,
-                                                                Toast.LENGTH_SHORT
-                                                            ).show()
-                                                        }
-                                                        with(btnSearch) {
-                                                            text = "Buscar"
-                                                            isEnabled = true
-                                                        }
-                                                    })
+                                    Handler(Looper.getMainLooper()).postDelayed({
+                                        searchRUCViewModel.find(edtNumeroDoc.text.toString())
+                                            .observe(viewLifecycleOwner) {
+                                                if (it.success) {
+                                                    validated = true
+                                                    showData(it.data!!)
+                                                } else {
+                                                    Toast.makeText(
+                                                        requireContext(),
+                                                        it.message,
+                                                        Toast.LENGTH_SHORT
+                                                    ).show()
+                                                }
+                                                with(btnSearch) {
+                                                    text = "Buscar"
+                                                    isEnabled = true
+                                                }
                                             }
-                                        }
-                                    }
-
+                                    }, 3000)
                                 } else {
                                     activateError(tiNumeroDoc, "RUC no válido")
                                 }
@@ -203,24 +190,24 @@ class RegistrarClienteDialog : DialogFragment() {
 
     private fun save() {
         if (indexTd == 2) {
-           if(validateOtroDocumento()){
-               val c = Cliente()
-               with(c) {
-                   with(binding) {
-                       documento = edtNumeroDoc.text.toString()
-                       nombre = edtNombres.text.toString()
-                       direccion = edtDireccion.text.toString()
-                       ubigeo = edtUbigeo.text.toString()
-                       telefono = edtTelefono.text.toString()
-                   }
-               }
-               viewModel.save(c).observe(viewLifecycleOwner, {
-                   Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-                   if (it.rpta == 1) {
-                       dismiss()
-                   }
-               })
-           }
+            if (validateOtroDocumento()) {
+                val c = Cliente()
+                with(c) {
+                    with(binding) {
+                        documento = edtNumeroDoc.text.toString()
+                        nombre = edtNombres.text.toString()
+                        direccion = edtDireccion.text.toString()
+                        ubigeo = edtUbigeo.text.toString()
+                        telefono = edtTelefono.text.toString()
+                    }
+                }
+                viewModel.save(c).observe(viewLifecycleOwner, {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                    if (it.rpta == 1) {
+                        dismiss()
+                    }
+                })
+            }
         } else {
             if (validated) {
                 if (binding.edtTelefono.text!!.toString().isNotEmpty()) {

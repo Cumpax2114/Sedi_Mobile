@@ -11,7 +11,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
@@ -31,6 +30,28 @@
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="73444093"
+                android:textSize="16sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="15dp"
+                android:text="Razón Social:"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvRz"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Franklin Bueno Gonzales"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -44,15 +65,37 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="15dp"
-                android:text="Nombre/RS:"
+                android:text="Teléfono:"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvNombreRZ"
+                android:id="@+id/tvTeléfono"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Franklin Bueno Gonzales"
+                android:text="970778767"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="15dp"
+                android:text="Monto Compra:"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvMontoCompra"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="200"
                 android:textSize="15sp" />
         </LinearLayout>
 
@@ -74,13 +117,13 @@
                 android:id="@+id/tvDireccion"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
+                android:layout_marginStart="15dp"
                 android:text="exampledir"
-                android:textSize="15sp" />
+                android:textSize="15dp" />
         </LinearLayout>
 
         <Button
-            android:id="@+id/btnSelectCliente"
+            android:id="@+id/btnSelectProveedor"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"

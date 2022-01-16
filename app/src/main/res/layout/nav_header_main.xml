@@ -26,7 +26,7 @@
         android:id="@+id/tvCorreoUsuario"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Bienvenido a SEDIT mobile app"
+        android:text="Bienvenido a SEDI mobile app"
         android:textColor="#FFFF"
         android:textSize="10sp"
         android:textStyle="bold" />

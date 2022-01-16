@@ -14,7 +14,7 @@ class ContratoFragment : Fragment() {
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        binding = FragmentContratoBinding.inflate(inflater)
+        binding = FragmentContratoBinding.inflate(inflater,container,false)
         return binding.root
     }
 }

@@ -33,12 +33,6 @@ class MovimientoCajaActivity : AppCompatActivity() {
             btnSelectPerson.setOnClickListener {
                 SeleccionePersonaDialog().show(supportFragmentManager, "")
             }
-            cboConceptoMovCaja.setOnItemClickListener { adapterView, view, i, l ->
-                Toast.makeText(this@MovimientoCajaActivity, i.toString(), Toast.LENGTH_SHORT).show()
-            }
-            cboMetodoPago.setOnItemClickListener { adapterView, view, i, l ->
-                Toast.makeText(this@MovimientoCajaActivity, i.toString(), Toast.LENGTH_SHORT).show()
-            }
         }
     }
 

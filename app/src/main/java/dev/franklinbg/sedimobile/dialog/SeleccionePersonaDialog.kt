@@ -20,7 +20,7 @@ import dev.franklinbg.sedimobile.utils.PersonMovCajaContainer
 
 class SeleccionePersonaDialog : DialogFragment(), SeleccionePersonaDialogCommunication {
     private lateinit var binding: DialogSeleccionePersonaBinding
-    private val fragmentsLabels = arrayOf("Cliente", "Trabajador", "Empleado")
+    private val fragmentsLabels = arrayOf("Cliente", "Proveedor", "Empleado")
     private lateinit var adapter: ViewPagerAdapter
     override fun onCreateView(
         inflater: LayoutInflater,
