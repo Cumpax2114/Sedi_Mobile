@@ -12,4 +12,6 @@ class UsuarioViewModel : ViewModel() {
         repository.login(email, password)
 
     fun listAll(): LiveData<GenericResponse<ArrayList<Usuario>>> = repository.listAll()
+    fun listForMovCaja(id: Int): LiveData<GenericResponse<ArrayList<Usuario>>> =
+        repository.listForMovCaja(id)
 }

@@ -55,4 +55,24 @@ class UsuarioRepository {
         })
         return mld;
     }
+    fun listForMovCaja(id:Int): LiveData<GenericResponse<ArrayList<Usuario>>> {
+        val mld = MutableLiveData<GenericResponse<ArrayList<Usuario>>>()
+        api.listForMovCaja(id).enqueue(object : Callback<GenericResponse<ArrayList<Usuario>>> {
+            override fun onResponse(
+                call: Call<GenericResponse<ArrayList<Usuario>>>,
+                response: Response<GenericResponse<ArrayList<Usuario>>>
+            ) {
+                mld.value = response.body()
+            }
+
+            override fun onFailure(call: Call<GenericResponse<ArrayList<Usuario>>>, t: Throwable) {
+                mld.value = GenericResponse(
+                    TIPO_RESULT,
+                    RPTA_ERROR,
+                    "internal exception:${t.message!!}",
+                )
+            }
+        })
+        return mld;
+    }
 }

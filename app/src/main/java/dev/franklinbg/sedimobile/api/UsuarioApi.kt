@@ -4,10 +4,7 @@ package dev.franklinbg.sedimobile.api
 import dev.franklinbg.sedimobile.model.Usuario
 import dev.franklinbg.sedimobile.utils.GenericResponse
 import retrofit2.Call
-import retrofit2.http.Field
-import retrofit2.http.FormUrlEncoded
-import retrofit2.http.GET
-import retrofit2.http.POST
+import retrofit2.http.*
 
 interface UsuarioApi {
     companion object {
@@ -24,4 +21,6 @@ interface UsuarioApi {
     @GET(baseUrl)
     fun listAll(): Call<GenericResponse<ArrayList<Usuario>>>
 
+    @GET("${baseUrl}/fmc/{id}")
+    fun listForMovCaja(@Path("id") id: Int): Call<GenericResponse<ArrayList<Usuario>>>
 }

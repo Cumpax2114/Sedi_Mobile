@@ -21,7 +21,7 @@ class ViewPagerAdapter(
         return when (position) {
             0 -> MovCajaSelectClienteFragment(communication)
             1 -> MovCajaSelectProveedorFragment(communication)
-            else -> MovCajaSelectTrabajadorFragment()
+            else -> MovCajaSelectTrabajadorFragment(communication)
         }
     }
 }
