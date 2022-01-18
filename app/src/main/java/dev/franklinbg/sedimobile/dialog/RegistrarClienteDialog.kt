@@ -1,6 +1,5 @@
 package dev.franklinbg.sedimobile.dialog
 
-import android.os.AsyncTask
 import android.os.Bundle
 import android.text.InputFilter
 import android.view.LayoutInflater
