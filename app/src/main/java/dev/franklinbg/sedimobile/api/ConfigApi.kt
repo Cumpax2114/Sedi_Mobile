@@ -2,6 +2,7 @@ package dev.franklinbg.sedimobile.api
 
 import com.google.gson.GsonBuilder
 import dev.franklinbg.sedimobile.utils.DateSerializer
+import dev.franklinbg.sedimobile.utils.SqlDateSerializer
 import okhttp3.OkHttpClient
 import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
@@ -17,11 +18,12 @@ class ConfigApi private constructor() {
         var cajaApi: CajaApi
         var metodoPagoApi: MetodoPagoApi
         var proveedorApi: ProveedorApi
-        var conceptoMovCajaApi:ConceptoMovCajaApi
+        var conceptoMovCajaApi: ConceptoMovCajaApi
 
         init {
             val gson = GsonBuilder()
                 .registerTypeAdapter(Date::class.java, DateSerializer())
+                .registerTypeAdapter(java.sql.Date::class.java, SqlDateSerializer())
                 //.registerTypeAdapter(Time::class.java, TimeSerializer())
                 .create()
 
@@ -35,7 +37,7 @@ class ConfigApi private constructor() {
             cajaApi = retrofit.create(CajaApi::class.java)
             metodoPagoApi = retrofit.create(MetodoPagoApi::class.java)
             proveedorApi = retrofit.create(ProveedorApi::class.java)
-            conceptoMovCajaApi=retrofit.create(ConceptoMovCajaApi::class.java)
+            conceptoMovCajaApi = retrofit.create(ConceptoMovCajaApi::class.java)
         }
 
         private fun getClient(): OkHttpClient {
@@ -44,9 +46,9 @@ class ConfigApi private constructor() {
             val builder = OkHttpClient.Builder()
             builder.addInterceptor(logging)
                 .cache(null)
-                .connectTimeout(30, TimeUnit.SECONDS)
-                .readTimeout(30, TimeUnit.SECONDS)
-                .writeTimeout(30, TimeUnit.SECONDS) //.addInterceptor(authInterceptor)
+                .connectTimeout(10, TimeUnit.SECONDS)
+                .readTimeout(10, TimeUnit.SECONDS)
+                .writeTimeout(10, TimeUnit.SECONDS) //.addInterceptor(authInterceptor)
             return builder.build()
         }
     }

@@ -1,14 +1,13 @@
 package dev.franklinbg.sedimobile.api
 
+import dev.franklinbg.sedimobile.model.Apertura
 import dev.franklinbg.sedimobile.model.Caja
 import dev.franklinbg.sedimobile.model.MovCaja
 import dev.franklinbg.sedimobile.model.dto.CajaWithDetallesDTO
 import dev.franklinbg.sedimobile.utils.GenericResponse
+import okhttp3.ResponseBody
 import retrofit2.Call
-import retrofit2.http.Body
-import retrofit2.http.GET
-import retrofit2.http.POST
-import retrofit2.http.Path
+import retrofit2.http.*
 
 interface CajaApi {
     companion object {
@@ -20,6 +19,16 @@ interface CajaApi {
 
     @POST("${base}/open")
     fun open(@Body dto: CajaWithDetallesDTO): Call<GenericResponse<CajaWithDetallesDTO>>
+
     @POST("${base}/movimiento")
-    fun saveMovimiento(@Body movCaja:MovCaja):Call<GenericResponse<MovCaja>>
+    fun saveMovimiento(@Body movCaja: MovCaja): Call<GenericResponse<MovCaja>>
+
+    @GET("${base}/aperturas/{idCaja}")
+    fun getAperturas(@Path("idCaja") idCaja: Int): Call<GenericResponse<ArrayList<Apertura>>>
+
+    @GET("${base}/report")
+    fun export(
+        @Query("idCaja") idCaja: Int,
+        @Query("fechaApertura") fechaApertura: String
+    ): Call<ResponseBody>
 }

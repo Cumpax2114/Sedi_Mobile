@@ -1,7 +1,10 @@
 package dev.franklinbg.sedimobile.model;
 
+import java.sql.Date;
+
 public class DetalleCaja {
     private int id;
+    private Date fechaCreacion;
     private Caja caja;
     private MetodoPago metodoPago;
     private double monto;
@@ -14,6 +17,14 @@ public class DetalleCaja {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Date getFechaCreacion() {
+        return fechaCreacion;
+    }
+
+    public void setFechaCreacion(Date fechaCreacion) {
+        this.fechaCreacion = fechaCreacion;
     }
 
     public Caja getCaja() {

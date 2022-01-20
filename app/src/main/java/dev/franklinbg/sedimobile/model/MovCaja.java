@@ -1,6 +1,8 @@
 package dev.franklinbg.sedimobile.model;
+
 public class MovCaja {
     private int id;
+    private Apertura apertura;
     private Caja caja;
     private Usuario usuario;
     private char tipoMov;
@@ -19,6 +21,14 @@ public class MovCaja {
 
     public void setId(int id) {
         this.id = id;
+    }
+
+    public Apertura getApertura() {
+        return apertura;
+    }
+
+    public void setApertura(Apertura apertura) {
+        this.apertura = apertura;
     }
 
     public Caja getCaja() {
