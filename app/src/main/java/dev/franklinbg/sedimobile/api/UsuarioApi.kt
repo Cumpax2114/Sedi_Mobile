@@ -1,6 +1,5 @@
 package dev.franklinbg.sedimobile.api
 
-
 import dev.franklinbg.sedimobile.model.Usuario
 import dev.franklinbg.sedimobile.utils.GenericResponse
 import retrofit2.Call

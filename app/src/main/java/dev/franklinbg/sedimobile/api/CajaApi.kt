@@ -2,6 +2,7 @@ package dev.franklinbg.sedimobile.api
 
 import dev.franklinbg.sedimobile.model.Apertura
 import dev.franklinbg.sedimobile.model.Caja
+import dev.franklinbg.sedimobile.model.DetalleCaja
 import dev.franklinbg.sedimobile.model.MovCaja
 import dev.franklinbg.sedimobile.model.dto.CajaWithDetallesDTO
 import dev.franklinbg.sedimobile.utils.GenericResponse
@@ -31,4 +32,10 @@ interface CajaApi {
         @Query("idCaja") idCaja: Int,
         @Query("fechaApertura") fechaApertura: String
     ): Call<ResponseBody>
+
+    @GET("${base}/detallesActuales/{idCaja}")
+    fun getCurrentDetails(@Path("idCaja") idCaja: Int): Call<GenericResponse<ArrayList<DetalleCaja>>>
+
+    @PUT("${base}/close/{idCaja}")
+    fun close(@Path("idCaja") idCaja: Int): Call<GenericResponse<ArrayList<DetalleCaja>>>
 }

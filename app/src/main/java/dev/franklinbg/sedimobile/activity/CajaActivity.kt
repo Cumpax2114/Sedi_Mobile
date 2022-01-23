@@ -9,6 +9,7 @@ import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.android.material.snackbar.Snackbar
+import dev.franklinbg.sedimobile.adapter.DetalleCajaAdapter
 import dev.franklinbg.sedimobile.adapter.MetodosPagoCajaAdapter
 import dev.franklinbg.sedimobile.communication.AddDetailCommunication
 import dev.franklinbg.sedimobile.databinding.ActivityCajaBinding
@@ -29,6 +30,7 @@ class CajaActivity : AppCompatActivity(), AddDetailCommunication {
     private lateinit var viewModel: CajaViewModel
     private lateinit var metodoPagoViewModel: MetodoPagoViewModel
     private lateinit var adapter: MetodosPagoCajaAdapter
+    private lateinit var detallesAdapter: DetalleCajaAdapter
     private val detallesApertura = ArrayList<DetalleCaja>()
     private var metodosPago = ArrayList<MetodoPago>()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -49,6 +51,11 @@ class CajaActivity : AppCompatActivity(), AddDetailCommunication {
 
     private fun initApdater() {
         adapter = MetodosPagoCajaAdapter(this)
+        detallesAdapter = DetalleCajaAdapter()
+        with(binding.rcvDetalles) {
+            layoutManager = LinearLayoutManager(this@CajaActivity)
+            adapter = detallesAdapter
+        }
         with(binding.rcvMTodosPago) {
             layoutManager = LinearLayoutManager(this@CajaActivity)
             adapter = this@CajaActivity.adapter
@@ -57,24 +64,34 @@ class CajaActivity : AppCompatActivity(), AddDetailCommunication {
 
     private fun loadData() {
         if (UsuarioContainer.currentUser != null) {
-            viewModel.getByUserId(UsuarioContainer.currentUser!!.id).observe(this, {
+            viewModel.getByUserId(UsuarioContainer.currentUser!!.id).observe(this) {
                 if (it.rpta == 1) {
                     currentCaja = it.body!!
                     adapter.idCaja = it.body!!.id
+                    if (currentCaja!!.estado == 'C') {
+                        metodoPagoViewModel.listActivos().observe(this) { resp ->
+                            if (resp.rpta == 1) {
+                                metodosPago = resp.body!!
+                                adapter.updateItems(resp.body!!)
+                            } else {
+                                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    } else {
+                        viewModel.getCurrentDetails(currentCaja!!.id).observe(this) { detailsR ->
+                            if (detailsR.rpta == 1) {
+                                detallesAdapter.updateItems(detailsR.body!!)
+                            } else {
+                                Toast.makeText(this, detailsR.message, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    }
                     showData()
                 } else {
                     Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                     finish()
                 }
 
-            })
-            metodoPagoViewModel.listActivos().observe(this) {
-                if (it.rpta == 1) {
-                    metodosPago = it.body!!
-                    adapter.updateItems(it.body!!)
-                } else {
-                    Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
-                }
             }
         } else {
             finish()
@@ -87,8 +104,10 @@ class CajaActivity : AppCompatActivity(), AddDetailCommunication {
         with(binding) {
             tvFechaApertura.text = simpleDatFormat.format(currentCaja!!.fechaApertura)
             tvFechaCierre.text = simpleDatFormat.format(currentCaja!!.fechaCierre)
-            if (currentCaja!!.estado == 'A') {
-                linearApertura.visibility = View.GONE
+            if (currentCaja!!.estado == 'C') {
+                cardApertura.visibility = View.VISIBLE
+            } else {
+                cardCierre.visibility = View.VISIBLE
             }
         }
     }
@@ -134,6 +153,20 @@ class CajaActivity : AppCompatActivity(), AddDetailCommunication {
                         Toast.LENGTH_SHORT
                     ).show()
                 }
+            }
+            btnClose.setOnClickListener {
+                MaterialAlertDialogBuilder(this@CajaActivity).setTitle("Cierre de caja")
+                    .setMessage("estas seguro de cerra esta caja?\nno podrás hacer movimientos hasta que la vuelvas a abrir")
+                    .setPositiveButton("Si,cerrar") { dialogInterface, _ ->
+                        viewModel.close(currentCaja!!.id).observe(this@CajaActivity) {
+                            Toast.makeText(this@CajaActivity, it.message, Toast.LENGTH_SHORT).show()
+                            if (it.rpta == 1) finish()
+                            dialogInterface.dismiss()
+                        }
+                    }
+                    .setNegativeButton("no,cancelar") { dialogInterface, _ ->
+                        dialogInterface.dismiss()
+                    }.show()
             }
         }
     }

@@ -17,6 +17,9 @@ class CajaViewModel : ViewModel() {
     fun open(dto: CajaWithDetallesDTO): LiveData<GenericResponse<CajaWithDetallesDTO>> =
         repository.open(dto)
 
+    fun close(idCaja: Int): LiveData<GenericResponse<ArrayList<DetalleCaja>>> =
+        repository.close(idCaja)
+
     fun saveMovimiento(movCaja: MovCaja): LiveData<GenericResponse<MovCaja>> =
         repository.saveMovimiento(movCaja)
 
@@ -25,4 +28,7 @@ class CajaViewModel : ViewModel() {
 
     fun export(idCaja: Int, fechaApertura: String): LiveData<GenericResponse<ResponseBody>> =
         repository.export(idCaja, fechaApertura)
+
+    fun getCurrentDetails(idCaja: Int): LiveData<GenericResponse<ArrayList<DetalleCaja>>> =
+        repository.getCurrentDetails(idCaja)
 }

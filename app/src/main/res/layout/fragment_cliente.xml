@@ -1,9 +1,10 @@
 <?xml version="1.0" encoding="utf-8"?>
-<androidx.coordinatorlayout.widget.CoordinatorLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:orientation="vertical"
     tools:context=".fragment.ClienteFragment">
 
     <androidx.recyclerview.widget.RecyclerView
@@ -11,18 +12,4 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="15dp" />
-
-    <com.google.android.material.floatingactionbutton.ExtendedFloatingActionButton
-        android:id="@+id/btnNewClient"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="bottom|right"
-        android:backgroundTint="@color/yellow"
-        android:contentDescription="Nuevo cliente"
-        android:elevation="6dp"
-        android:text="Nuevo"
-        android:textColor="?attr/colorOnSurface"
-        android:textSize="16sp"
-        app:icon="@drawable/ic_add"
-        app:iconTint="@color/black" />
-</androidx.coordinatorlayout.widget.CoordinatorLayout>
+</LinearLayout>

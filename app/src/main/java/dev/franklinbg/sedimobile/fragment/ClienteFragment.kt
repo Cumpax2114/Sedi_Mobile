@@ -8,6 +8,8 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
+import dev.franklinbg.sedimobile.R
+import dev.franklinbg.sedimobile.activity.HomeActivity
 import dev.franklinbg.sedimobile.adapter.ClienteAdapter
 import dev.franklinbg.sedimobile.databinding.FragmentClienteBinding
 import dev.franklinbg.sedimobile.dialog.RegistrarClienteDialog
@@ -26,8 +28,17 @@ class ClienteFragment : Fragment() {
         initViewModel()
         initAdapter()
         loadData()
-        initListeners()
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (requireActivity() as HomeActivity).setMenuToolbar(R.menu.menu_clientes)
+    }
+
+    override fun onPause() {
+        super.onPause()
+        (requireActivity() as HomeActivity).clearMenu()
     }
 
     private fun loadData() {
@@ -52,9 +63,4 @@ class ClienteFragment : Fragment() {
         viewModel = ViewModelProvider(this)[ClienteViewModel::class.java]
     }
 
-    private fun initListeners() {
-        binding.btnNewClient.setOnClickListener {
-            RegistrarClienteDialog().show(childFragmentManager, "")
-        }
-    }
 }

@@ -86,4 +86,9 @@ public class Cliente {
     public void setMonto_compra(double monto_compra) {
         this.monto_compra = monto_compra;
     }
+
+    @Override
+    public String toString() {
+        return nombre;
+    }
 }

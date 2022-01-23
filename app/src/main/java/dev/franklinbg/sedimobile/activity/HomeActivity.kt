@@ -13,7 +13,9 @@ import cn.pedant.SweetAlert.SweetAlertDialog
 import com.google.android.material.navigation.NavigationView
 import dev.franklinbg.sedimobile.R
 import dev.franklinbg.sedimobile.databinding.ActivityHomeBinding
+import dev.franklinbg.sedimobile.dialog.RegistrarClienteDialog
 import dev.franklinbg.sedimobile.utils.UsuarioContainer
+
 class HomeActivity : AppCompatActivity() {
     private lateinit var appBarConfiguration: AppBarConfiguration
     private lateinit var binding: ActivityHomeBinding
@@ -33,7 +35,7 @@ class HomeActivity : AppCompatActivity() {
 
         appBarConfiguration = AppBarConfiguration(
             setOf(
-                R.id.nav_caja, R.id.nav_cliente,R.id.nav_contrato,R.id.nav_settings
+                R.id.nav_caja, R.id.nav_cliente, R.id.nav_contrato, R.id.nav_settings
             ), drawerLayout
         )
         setupActionBarWithNavController(navController, appBarConfiguration)
@@ -78,4 +80,19 @@ class HomeActivity : AppCompatActivity() {
                 finish()
             }.show()
     }
+
+    fun setMenuToolbar(menuId: Int) {
+        binding.appBarMain.toolbar.inflateMenu(menuId)
+        binding.appBarMain.toolbar.setOnMenuItemClickListener {
+            when (it.itemId) {
+                R.id.itemNewClient -> {
+                    RegistrarClienteDialog().show(supportFragmentManager, "")
+                    return@setOnMenuItemClickListener true
+                }
+            }
+            return@setOnMenuItemClickListener false
+        }
+    }
+
+    fun clearMenu() = binding.appBarMain.toolbar.menu.clear()
 }

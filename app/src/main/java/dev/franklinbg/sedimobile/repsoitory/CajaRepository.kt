@@ -6,10 +6,10 @@ import androidx.lifecycle.MutableLiveData
 import dev.franklinbg.sedimobile.api.ConfigApi
 import dev.franklinbg.sedimobile.model.Apertura
 import dev.franklinbg.sedimobile.model.Caja
+import dev.franklinbg.sedimobile.model.DetalleCaja
 import dev.franklinbg.sedimobile.model.MovCaja
 import dev.franklinbg.sedimobile.model.dto.CajaWithDetallesDTO
 import dev.franklinbg.sedimobile.utils.GenericResponse
-import dev.franklinbg.sedimobile.utils.Global
 import dev.franklinbg.sedimobile.utils.Global.*
 import okhttp3.ResponseBody
 import retrofit2.Call
@@ -31,8 +31,8 @@ class CajaRepository {
             override fun onFailure(call: Call<GenericResponse<Caja>>, t: Throwable) {
                 mld.value =
                     GenericResponse(
-                        Global.TIPO_RESULT,
-                        Global.RPTA_ERROR,
+                        TIPO_RESULT,
+                        RPTA_ERROR,
                         "internal exception:${t.message!!}",
                     )
             }
@@ -54,9 +54,35 @@ class CajaRepository {
             override fun onFailure(call: Call<GenericResponse<CajaWithDetallesDTO>>, t: Throwable) {
                 mld.value =
                     GenericResponse(
-                        Global.TIPO_RESULT,
-                        Global.RPTA_ERROR,
-                        "internal exception:${t.message!!}",
+                        TIPO_RESULT,
+                        RPTA_ERROR,
+                        "internal exception, no se pudo abrir la caja:${t.message!!}",
+                    )
+            }
+
+        })
+        return mld
+    }
+
+    fun close(idCaja: Int): LiveData<GenericResponse<ArrayList<DetalleCaja>>> {
+        val mld = MutableLiveData<GenericResponse<ArrayList<DetalleCaja>>>()
+        api.close(idCaja).enqueue(object : Callback<GenericResponse<ArrayList<DetalleCaja>>> {
+            override fun onResponse(
+                call: Call<GenericResponse<ArrayList<DetalleCaja>>>,
+                response: Response<GenericResponse<ArrayList<DetalleCaja>>>
+            ) {
+                mld.value = response.body()
+            }
+
+            override fun onFailure(
+                call: Call<GenericResponse<ArrayList<DetalleCaja>>>,
+                t: Throwable
+            ) {
+                mld.value =
+                    GenericResponse(
+                        TIPO_RESULT,
+                        RPTA_ERROR,
+                        "internal exception, no se pudo cerrar la caja:${t.message!!}",
                     )
             }
 
@@ -77,8 +103,8 @@ class CajaRepository {
             override fun onFailure(call: Call<GenericResponse<MovCaja>>, t: Throwable) {
                 mld.value =
                     GenericResponse(
-                        Global.TIPO_RESULT,
-                        Global.RPTA_ERROR,
+                        TIPO_RESULT,
+                        RPTA_ERROR,
                         "internal exception:${t.message!!}",
                     )
             }
@@ -100,8 +126,8 @@ class CajaRepository {
             override fun onFailure(call: Call<GenericResponse<ArrayList<Apertura>>>, t: Throwable) {
                 mld.value =
                     GenericResponse(
-                        Global.TIPO_RESULT,
-                        Global.RPTA_ERROR,
+                        TIPO_RESULT,
+                        RPTA_ERROR,
                         "internal exception:${t.message!!}",
                     )
             }
@@ -128,14 +154,38 @@ class CajaRepository {
             }
 
             override fun onFailure(call: Call<ResponseBody>, t: Throwable) {
-                Log.e("exportComplaint", t.message!!)
                 mld.value = GenericResponse(
                     TIPO_DATA,
-                    RPTA_WARNING,
+                    RPTA_ERROR,
                     "internal exception: no se ha podido descargar el reporte:${t.message!!}"
                 )
             }
         })
+        return mld
+    }
+
+    fun getCurrentDetails(idCaja: Int): LiveData<GenericResponse<ArrayList<DetalleCaja>>> {
+        val mld = MutableLiveData<GenericResponse<ArrayList<DetalleCaja>>>()
+        api.getCurrentDetails(idCaja)
+            .enqueue(object : Callback<GenericResponse<ArrayList<DetalleCaja>>> {
+                override fun onResponse(
+                    call: Call<GenericResponse<ArrayList<DetalleCaja>>>,
+                    response: Response<GenericResponse<ArrayList<DetalleCaja>>>
+                ) {
+                    mld.value = response.body()
+                }
+
+                override fun onFailure(
+                    call: Call<GenericResponse<ArrayList<DetalleCaja>>>,
+                    t: Throwable
+                ) {
+                    mld.value = GenericResponse(
+                        TIPO_DATA,
+                        RPTA_ERROR,
+                        "internal exception: no se ha podido obtener los detalles de caja:${t.message!!}"
+                    )
+                }
+            })
         return mld
     }
 }

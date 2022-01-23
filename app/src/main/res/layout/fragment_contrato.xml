@@ -7,20 +7,6 @@
     android:orientation="vertical"
     tools:context=".fragment.ContratoFragment">
 
-    <com.google.android.material.appbar.AppBarLayout
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:theme="@style/Theme.App.AppBarOverlay">
-
-        <com.google.android.material.appbar.MaterialToolbar
-            android:id="@+id/toolbar"
-            android:layout_width="match_parent"
-            android:layout_height="?attr/actionBarSize"
-            android:background="?attr/colorPrimary"
-            app:title="Contrato"
-            app:titleCentered="true" />
-    </com.google.android.material.appbar.AppBarLayout>
-
     <androidx.cardview.widget.CardView
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
@@ -69,9 +55,10 @@
                 android:hint="fecha de inicio">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtFechaInicio"
+                    android:id="@+id/dpFechaInicio"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
 
             <com.google.android.material.textfield.TextInputLayout
@@ -82,7 +69,7 @@
                 android:hint="fecha de fin">
 
                 <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtFechaFin"
+                    android:id="@+id/dpFechaFin"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content" />
             </com.google.android.material.textfield.TextInputLayout>
@@ -101,46 +88,39 @@
                     android:inputType="numberDecimal" />
             </com.google.android.material.textfield.TextInputLayout>
 
-            <LinearLayout
-                android:layout_width="wrap_content"
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiCuotas"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:layout_marginTop="5dp"
-                android:orientation="horizontal">
+                android:hint="Cuotas">
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:text="cuotas" />
-
-                <RadioGroup
+                <AutoCompleteTextView
+                    android:id="@+id/cboCuotas"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:orientation="horizontal">
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
 
-                    <RadioButton
-                        android:id="@+id/rb1cuota"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:checked="true"
-                        android:text="1" />
+            <Button
+                android:id="@+id/btnCalcularCuota"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text="calcular total por cuota" />
 
-                    <RadioButton
-                        android:id="@+id/rb2cuotas"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:text="2" />
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiTotalCuota"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:enabled="false"
+                android:hint="total por cuota">
 
-                    <RadioButton
-                        android:id="@+id/rb3cuotas"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:layout_marginStart="20dp"
-                        android:text="3" />
-                </RadioGroup>
-            </LinearLayout>
+                <com.google.android.material.textfield.TextInputEditText
+                    android:id="@+id/edtTotalCuota"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content" />
+            </com.google.android.material.textfield.TextInputLayout>
 
             <Button
                 android:layout_width="wrap_content"

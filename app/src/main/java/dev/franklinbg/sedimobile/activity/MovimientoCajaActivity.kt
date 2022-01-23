@@ -101,6 +101,33 @@ class MovimientoCajaActivity : AppCompatActivity() {
             viewModel.getByUserId(UsuarioContainer.currentUser!!.id).observe(this) {
                 if (it.rpta == 1) {
                     currentCaja = it.body!!
+                    if (currentCaja.estado == 'A') {
+                        conceptoMovCajaViewModel.listActivos().observe(this) { cmcR ->
+                            if (cmcR.rpta == 1) {
+                                with(conceptosMC) {
+                                    clear()
+                                    addAll(cmcR.body!!)
+                                }
+                                binding.cboConceptoMovCaja.setAdapter(
+                                    ArrayAdapter(
+                                        this,
+                                        android.R.layout.simple_spinner_dropdown_item,
+                                        conceptosMC
+                                    )
+                                )
+                                loadMetodosPago()
+                            } else {
+                                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                    } else {
+                        Toast.makeText(
+                            this@MovimientoCajaActivity,
+                            "esta caja esta cerrada\npara realizar movimientos primero tienes que abrirla",
+                            Toast.LENGTH_SHORT
+                        ).show()
+                        finish()
+                    }
                 } else {
                     Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
                     finish()
@@ -109,24 +136,6 @@ class MovimientoCajaActivity : AppCompatActivity() {
             }
         } else {
             finish()
-        }
-        conceptoMovCajaViewModel.listActivos().observe(this) {
-            if (it.rpta == 1) {
-                with(conceptosMC) {
-                    clear()
-                    addAll(it.body!!)
-                }
-                binding.cboConceptoMovCaja.setAdapter(
-                    ArrayAdapter(
-                        this,
-                        android.R.layout.simple_spinner_dropdown_item,
-                        conceptosMC
-                    )
-                )
-                loadMetodosPago()
-            } else {
-                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
-            }
         }
     }
 
@@ -157,11 +166,11 @@ class MovimientoCajaActivity : AppCompatActivity() {
             }
             2 -> {
                 binding.btnSelectPerson.text =
-                    "Trabajador:${PersonMovCajaContainer.usuario?.nombre}"
+                    "Trabajador:${usuario?.nombre}"
             }
             3 -> {
                 binding.btnSelectPerson.text =
-                    "Proveedor:${PersonMovCajaContainer.proveedor?.nombre}"
+                    "Proveedor:${proveedor?.nombre}"
             }
         }
     }
