@@ -25,6 +25,7 @@ import android.os.Looper
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
 import dev.franklinbg.sedimobile.model.Cliente
+import dev.franklinbg.sedimobile.utils.activateTextInputError
 import dev.franklinbg.sedimobile.viewmodel.ClienteViewModel
 
 
@@ -121,7 +122,7 @@ class RegistrarClienteDialog : DialogFragment() {
                                             }
                                     }, 3000)
                                 } else {
-                                    activateError(tiNumeroDoc, "DNI no válido")
+                                    activateTextInputError(tiNumeroDoc, "DNI no válido")
                                 }
                             }
                             1 -> {
@@ -150,12 +151,12 @@ class RegistrarClienteDialog : DialogFragment() {
                                             }
                                     }, 3000)
                                 } else {
-                                    activateError(tiNumeroDoc, "RUC no válido")
+                                    activateTextInputError(tiNumeroDoc, "RUC no válido")
                                 }
                             }
                         }
                     } else {
-                        activateError(tiNumeroDoc)
+                        activateTextInputError(tiNumeroDoc)
                     }
                 } else {
                     Toast.makeText(
@@ -227,7 +228,7 @@ class RegistrarClienteDialog : DialogFragment() {
                         }
                     })
                 } else {
-                    activateError(binding.tiTelefono)
+                    activateTextInputError(binding.tiTelefono)
                 }
             } else {
                 Toast.makeText(
@@ -244,23 +245,23 @@ class RegistrarClienteDialog : DialogFragment() {
         with(binding) {
             if (edtNumeroDoc.text!!.isEmpty()) {
                 valid = false
-                activateError(tiNumeroDoc)
+                activateTextInputError(tiNumeroDoc)
             }
             if (edtNombres.text!!.isEmpty()) {
                 valid = false
-                activateError(tiNombres)
+                activateTextInputError(tiNombres)
             }
             if (edtDireccion.text!!.isEmpty()) {
                 valid = false
-                activateError(tiDireccion)
+                activateTextInputError(tiDireccion)
             }
             if (edtUbigeo.text!!.isEmpty()) {
                 valid = false
-                activateError(tiUbigeo)
+                activateTextInputError(tiUbigeo)
             }
             if (edtTelefono.text!!.isEmpty()) {
                 valid = false
-                activateError(tiTelefono)
+                activateTextInputError(tiTelefono)
             }
         }
         return valid
@@ -287,11 +288,6 @@ class RegistrarClienteDialog : DialogFragment() {
             edtUbigeo.setText("${data.ubigeo[0]},${data.ubigeo[1]},${data.ubigeo[2]}")
         }
     }
-
-    private fun activateError(ti: TextInputLayout, errmsg: String = "campo requerido") {
-        ti.error = errmsg
-    }
-
     private fun changeFieldStatus(status: Boolean) {
         with(binding) {
             tiNombres.isEnabled = status

@@ -14,6 +14,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.textfield.TextInputLayout
 import dev.franklinbg.sedimobile.databinding.ActivityLoginBinding
 import dev.franklinbg.sedimobile.utils.UsuarioContainer
+import dev.franklinbg.sedimobile.utils.activateTextInputError
 import dev.franklinbg.sedimobile.viewmodel.UsuarioViewModel
 import java.util.regex.Pattern
 
@@ -65,14 +66,14 @@ class LoginActivity : AppCompatActivity() {
         with(binding) {
             if (edtEmail.text!!.isEmpty()) {
                 valid = false
-                activateError(tiEmail)
+                activateTextInputError(tiEmail)
             } else if (isNotValidMail(edtEmail.text!!.toString())) {
                 valid = false
-                activateError(tiEmail, "ingrese un correo válido")
+                activateTextInputError(tiEmail, "ingrese un correo válido")
             }
             if (edtPassword.text!!.isEmpty()) {
                 valid = false
-                activateError(tiPassword)
+                activateTextInputError(tiPassword)
             }
         }
         return valid
@@ -81,10 +82,6 @@ class LoginActivity : AppCompatActivity() {
     private fun isNotValidMail(email: String): Boolean {
         val regexPattern = "^(.+)@(\\S+)$"
         return !Pattern.compile(regexPattern).matcher(email).matches()
-    }
-
-    private fun activateError(til: TextInputLayout, error: String = "campo abligatorio") {
-        til.error = error
     }
 
     private fun addTextWatcher(edt: EditText, til: TextInputLayout) {

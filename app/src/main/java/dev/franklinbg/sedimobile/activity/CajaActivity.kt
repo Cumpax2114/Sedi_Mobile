@@ -106,7 +106,9 @@ class CajaActivity : AppCompatActivity(), AddDetailCommunication {
             tvFechaCierre.text = simpleDatFormat.format(currentCaja!!.fechaCierre)
             if (currentCaja!!.estado == 'C') {
                 cardApertura.visibility = View.VISIBLE
+                cardCierre.visibility = View.GONE
             } else {
+                cardApertura.visibility = View.GONE
                 cardCierre.visibility = View.VISIBLE
             }
         }

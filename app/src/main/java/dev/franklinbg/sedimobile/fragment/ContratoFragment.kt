@@ -7,6 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import android.widget.ArrayAdapter
 import android.widget.Toast
+import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
@@ -15,8 +16,12 @@ import dev.franklinbg.sedimobile.databinding.FragmentContratoBinding
 import dev.franklinbg.sedimobile.model.Cliente
 import dev.franklinbg.sedimobile.model.TipoContrato
 import dev.franklinbg.sedimobile.utils.DecimalDigitsInputFilter
+import dev.franklinbg.sedimobile.utils.UsuarioContainer
+import dev.franklinbg.sedimobile.utils.activateTextInputError
+import dev.franklinbg.sedimobile.viewmodel.CajaViewModel
 import dev.franklinbg.sedimobile.viewmodel.ClienteViewModel
 import dev.franklinbg.sedimobile.viewmodel.ContratoViewModel
+import dev.franklinbg.sedimobile.viewmodel.UsuarioViewModel
 import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -26,12 +31,15 @@ import kotlin.collections.ArrayList
 class ContratoFragment : Fragment() {
     private lateinit var binding: FragmentContratoBinding
     private lateinit var viewModel: ContratoViewModel
+    private lateinit var cajaViewModel: CajaViewModel
     private lateinit var clienteViewModel: ClienteViewModel
     private lateinit var adapter: ArrayAdapter<TipoContrato>
     private lateinit var clienteAdapter: ArrayAdapter<Cliente>
     private val tipos = ArrayList<TipoContrato>()
     private val clientes = ArrayList<Cliente>()
     private var cantCuotas = -1
+    private var indexTipoContrato = -1
+    private var indexCliente = -1
     private val cuotas = arrayOf(
         "1",
         "2",
@@ -67,6 +75,7 @@ class ContratoFragment : Fragment() {
         val vmp = ViewModelProvider(this)
         viewModel = vmp[ContratoViewModel::class.java]
         clienteViewModel = vmp[ClienteViewModel::class.java]
+        cajaViewModel = vmp[CajaViewModel::class.java]
         initListeners()
         initAdapter()
         loadData()
@@ -87,37 +96,67 @@ class ContratoFragment : Fragment() {
     }
 
     private fun loadData() {
-        viewModel.listTiposActivos().observe(viewLifecycleOwner) {
-            if (it.rpta == 1) {
-                tipos.clear()
-                tipos.addAll(it.body!!)
-                adapter.notifyDataSetChanged()
-            } else {
-                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-            }
+        if (UsuarioContainer.currentUser != null) {
+            cajaViewModel.getByUserId(UsuarioContainer.currentUser!!.id)
+                .observe(viewLifecycleOwner) {
+                    if (it.rpta == 1) {
+                        if (it.body!!.estado == 'A') {
+                            viewModel.listTiposActivos().observe(viewLifecycleOwner) { gRes ->
+                                if (gRes.rpta == 1) {
+                                    tipos.clear()
+                                    tipos.addAll(gRes.body!!)
+                                    adapter.notifyDataSetChanged()
+                                } else {
+                                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT)
+                                        .show()
+                                }
+                            }
+                            clienteViewModel.listAll().observe(viewLifecycleOwner) { gRes ->
+                                if (gRes.rpta == 1) {
+                                    clientes.clear()
+                                    clientes.addAll(gRes.body!!)
+                                    clienteAdapter.notifyDataSetChanged()
+                                } else {
+                                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT)
+                                        .show()
+                                }
+                            }
+                            binding.cboCuotas.setAdapter(
+                                ArrayAdapter(
+                                    requireContext(),
+                                    android.R.layout.simple_spinner_dropdown_item,
+                                    cuotas
+                                )
+                            )
+                        } else {
+                            binding.linearForbidden.visibility = View.VISIBLE
+                            binding.cardContratos.visibility = View.GONE
+                            binding.tvDetails.text = "la caja esta cerrada"
+                        }
+                    } else {
+                        binding.linearForbidden.visibility = View.VISIBLE
+                        binding.cardContratos.visibility = View.GONE
+                        binding.tvDetails.text = "tu usuario no está relacionado con ninguna caja"
+                    }
+                }
+        } else {
+            requireActivity().finish()
         }
-        clienteViewModel.listAll().observe(viewLifecycleOwner) {
-            if (it.rpta == 1) {
-                clientes.clear()
-                clientes.addAll(it.body!!)
-                clienteAdapter.notifyDataSetChanged()
-            } else {
-                Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
-            }
-        }
-        binding.cboCuotas.setAdapter(
-            ArrayAdapter(
-                requireContext(),
-                android.R.layout.simple_spinner_dropdown_item,
-                cuotas
-            )
-        )
     }
 
     private fun initListeners() {
         with(binding) {
             cboCuotas.setOnItemClickListener { _, _, i, _ ->
                 cantCuotas = i + 1
+                tiCuotas.isErrorEnabled = false
+            }
+            cboTipoContrato.setOnItemClickListener { _, _, i, _ ->
+                indexTipoContrato = i
+                tiTipoContrato.isErrorEnabled = false
+            }
+            cboCliente.setOnItemClickListener { _, _, i, _ ->
+                indexCliente = i
+                tiCliente.isErrorEnabled = false
             }
             edtTotal.filters = arrayOf(DecimalDigitsInputFilter(11, 2))
             val constraint =
@@ -158,11 +197,15 @@ class ContratoFragment : Fragment() {
                                 Locale.US
                             ).format(it)
                         )
-                        tiFechaInicio.isErrorEnabled = false
+                        tiFechaFin.isErrorEnabled = false
                     }
                     picker.show(childFragmentManager, "")
                     edtTotal.requestFocus()
                 }
+            }
+            edtTotal.addTextChangedListener {
+                tiTotal.isErrorEnabled = false
+                edtTotalCuota.text!!.clear()
             }
             btnCalcularCuota.setOnClickListener {
                 var valid = true
@@ -186,11 +229,48 @@ class ContratoFragment : Fragment() {
                         val total = decimalFormat.parse(edtTotal.text.toString()).toDouble()
                         val totalCuotas = total / cantCuotas
                         edtTotalCuota.setText(decimalFormat.format(totalCuotas))
+                        tiTotalCuota.isErrorEnabled = false
                     } catch (pe: ParseException) {
                         Toast.makeText(requireContext(), pe.message, Toast.LENGTH_SHORT).show()
                     }
                 }
             }
+            btnSave.setOnClickListener {
+                validate()
+            }
         }
+    }
+
+    fun validate(): Boolean {
+        var valid = true
+        if (indexTipoContrato == -1) {
+            valid = false
+            activateTextInputError(binding.tiTipoContrato, "Seleccione un tipo de contrato")
+        }
+        if (indexCliente == -1) {
+            valid = false
+            activateTextInputError(binding.tiCliente, "Seleccione un cliente")
+        }
+        if (binding.dpFechaInicio.text!!.isEmpty()) {
+            valid = false
+            activateTextInputError(binding.tiFechaInicio, "Seleccione una fecha de inicio")
+        }
+        if (binding.dpFechaFin.text!!.isEmpty()) {
+            valid = false
+            activateTextInputError(binding.tiFechaFin, "Seleccione una fecha de fin")
+        }
+        if (binding.edtTotal.text!!.isEmpty()) {
+            valid = false
+            activateTextInputError(binding.tiTotal, "Ingrese un monto")
+        }
+        if (cantCuotas == -1) {
+            valid = false
+            activateTextInputError(binding.tiCuotas, "Seleccione cantidad de cuotas")
+        }
+        if (binding.edtTotalCuota.text!!.isEmpty()) {
+            valid = false
+            activateTextInputError(binding.tiTotalCuota, "Tienes que realizar el cálculo primero")
+        }
+        return valid
     }
 }

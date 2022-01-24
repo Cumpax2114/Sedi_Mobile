@@ -7,5 +7,5 @@ import dev.franklinbg.sedimobile.model.Usuario
 interface SeleccionePersonaDialogCommunication {
     fun addCliente(cliente: Cliente)
     fun addUsuario(usuario: Usuario)
-    fun appProveedor(proveedor: Proveedor)
+    fun addProveedor(proveedor: Proveedor)
 }

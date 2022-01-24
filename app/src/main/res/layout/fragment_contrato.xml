@@ -7,126 +7,164 @@
     android:orientation="vertical"
     tools:context=".fragment.ContratoFragment">
 
-    <androidx.cardview.widget.CardView
+    <ScrollView
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_margin="10dp"
-        app:cardCornerRadius="15dp">
+        android:layout_height="wrap_content">
 
         <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="10dp"
             android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiTipoContrato"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardContratos"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Tipo contrato">
+                android:layout_margin="10dp"
+                app:cardCornerRadius="15dp">
 
-                <AutoCompleteTextView
-                    android:id="@+id/cboTipoContrato"
+                <LinearLayout
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="none" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_margin="10dp"
+                    android:orientation="vertical">
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiCliente"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tiTipoContrato"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Tipo contrato">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/cboTipoContrato"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tiCliente"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Cliente">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/cboCliente"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tiFechaInicio"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="fecha de inicio">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/dpFechaInicio"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tiFechaFin"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="fecha de fin">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/dpFechaFin"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tiTotal"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="total del contrato">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtTotal"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="numberDecimal" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tiCuotas"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:hint="Cuotas">
+
+                        <AutoCompleteTextView
+                            android:id="@+id/cboCuotas"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content"
+                            android:inputType="none" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/btnCalcularCuota"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:text="calcular total por cuota" />
+
+                    <com.google.android.material.textfield.TextInputLayout
+                        android:id="@+id/tiTotalCuota"
+                        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:enabled="false"
+                        android:hint="total por cuota">
+
+                        <com.google.android.material.textfield.TextInputEditText
+                            android:id="@+id/edtTotalCuota"
+                            android:layout_width="match_parent"
+                            android:layout_height="wrap_content" />
+                    </com.google.android.material.textfield.TextInputLayout>
+
+                    <Button
+                        android:id="@+id/btnSave"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center_horizontal"
+                        android:text="Registrar Contrato" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <LinearLayout
+                android:id="@+id/linearForbidden"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Cliente">
+                android:orientation="vertical"
+                android:visibility="gone">
 
-                <AutoCompleteTextView
-                    android:id="@+id/cboCliente"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="none" />
-            </com.google.android.material.textfield.TextInputLayout>
+                    android:layout_gravity="center_horizontal"
+                    android:text="No puedes hacer contratos"
+                    android:textColor="@color/red"
+                    android:textSize="25dp"
+                    android:textStyle="bold" />
 
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiFechaInicio"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="fecha de inicio">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/dpFechaInicio"
-                    android:layout_width="match_parent"
+                <TextView
+                    android:id="@+id/tvDetails"
+                    android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:inputType="none" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiFechaFin"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="fecha de fin">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/dpFechaFin"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiTotal"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="total del contrato">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtTotal"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="numberDecimal" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiCuotas"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:hint="Cuotas">
-
-                <AutoCompleteTextView
-                    android:id="@+id/cboCuotas"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:inputType="none" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
-                android:id="@+id/btnCalcularCuota"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:text="calcular total por cuota" />
-
-            <com.google.android.material.textfield.TextInputLayout
-                android:id="@+id/tiTotalCuota"
-                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:enabled="false"
-                android:hint="total por cuota">
-
-                <com.google.android.material.textfield.TextInputEditText
-                    android:id="@+id/edtTotalCuota"
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
-            </com.google.android.material.textfield.TextInputLayout>
-
-            <Button
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center_horizontal"
-                android:text="Registrar Contrato" />
+                    android:layout_gravity="center_horizontal"
+                    android:text="details"
+                    android:textSize="15dp" />
+            </LinearLayout>
         </LinearLayout>
-    </androidx.cardview.widget.CardView>
+    </ScrollView>
 </LinearLayout>

@@ -65,18 +65,24 @@ class SeleccionePersonaDialog : DialogFragment(), SeleccionePersonaDialogCommuni
 
     override fun addCliente(cliente: Cliente) {
         PersonMovCajaContainer.cliente = cliente
+        PersonMovCajaContainer.proveedor = null
+        PersonMovCajaContainer.usuario = null
         PersonMovCajaContainer.type = 1
         dismiss()
     }
 
     override fun addUsuario(usuario: Usuario) {
         PersonMovCajaContainer.usuario = usuario
+        PersonMovCajaContainer.cliente = null
+        PersonMovCajaContainer.proveedor = null
         PersonMovCajaContainer.type = 2
         dismiss()
     }
 
-    override fun appProveedor(proveedor: Proveedor) {
+    override fun addProveedor(proveedor: Proveedor) {
         PersonMovCajaContainer.proveedor = proveedor
+        PersonMovCajaContainer.cliente = null
+        PersonMovCajaContainer.usuario = null
         PersonMovCajaContainer.type = 3
         dismiss()
     }

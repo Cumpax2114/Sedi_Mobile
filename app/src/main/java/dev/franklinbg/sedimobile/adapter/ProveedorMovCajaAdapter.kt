@@ -45,7 +45,7 @@ class ProveedorMovCajaAdapter(val communication: SeleccionePersonaDialogCommunic
                 tvMontoCompra.text = "S/${proveedor.monto_compra}"
                 tvDireccion.text = proveedor.direccion
                 btnSelectProveedor.setOnClickListener {
-                    communication.appProveedor(proveedor)
+                    communication.addProveedor(proveedor)
                 }
             }
         }
