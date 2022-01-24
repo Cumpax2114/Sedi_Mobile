@@ -12,6 +12,7 @@ import androidx.lifecycle.ViewModelProvider
 import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dev.franklinbg.sedimobile.databinding.FragmentContratoBinding
 import dev.franklinbg.sedimobile.model.Cliente
 import dev.franklinbg.sedimobile.model.Contrato
@@ -310,6 +311,21 @@ class ContratoFragment : Fragment() {
             SimpleDateFormat("dd-MM-yyyy", Locale.US).let {
                 fechaInicio = it.parse(binding.dpFechaInicio.text!!.toString())
                 fechaFin = it.parse(binding.dpFechaFin.text!!.toString())
+                if (cantCuotas != -1) {
+                    val calendarInicio = GregorianCalendar()
+                    val calendarFin = GregorianCalendar()
+                    calendarInicio.time = fechaInicio
+                    calendarFin.time = fechaFin
+                    val difA = calendarFin[Calendar.YEAR] - calendarInicio[Calendar.YEAR]
+                    val difM =
+                        difA * 12 + calendarFin[Calendar.MONTH] - calendarInicio[Calendar.MONTH]
+                    if (difM != cantCuotas) {
+                        valid = false
+                        MaterialAlertDialogBuilder(requireContext()).setTitle("Aviso de datos incorrectos")
+                            .setMessage("la diferecia de meses entre la fecha de inicio y fin tiene que ser la misma que la cantidad de cuotas mensuales\nes este caso debería ser de $cantCuotas meses")
+                            .show()
+                    }
+                }
                 if (fechaFin.before(fechaInicio)) {
                     valid = false
                     activateTextInputError(

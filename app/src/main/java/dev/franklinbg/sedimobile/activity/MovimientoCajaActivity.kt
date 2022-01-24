@@ -6,7 +6,6 @@ import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
-import com.google.android.material.textfield.TextInputLayout
 import dev.franklinbg.sedimobile.databinding.ActivityMovimientoCajaBinding
 import dev.franklinbg.sedimobile.dialog.SeleccionePersonaDialog
 import dev.franklinbg.sedimobile.model.Caja
@@ -18,6 +17,7 @@ import dev.franklinbg.sedimobile.utils.PersonMovCajaContainer.Companion.cliente
 import dev.franklinbg.sedimobile.utils.PersonMovCajaContainer.Companion.proveedor
 import dev.franklinbg.sedimobile.utils.PersonMovCajaContainer.Companion.usuario
 import dev.franklinbg.sedimobile.utils.UsuarioContainer
+import dev.franklinbg.sedimobile.utils.activateTextInputError
 import dev.franklinbg.sedimobile.viewmodel.CajaViewModel
 import dev.franklinbg.sedimobile.viewmodel.ConceptoMovCajaViewModel
 import dev.franklinbg.sedimobile.viewmodel.MetodoPagoViewModel
@@ -180,17 +180,17 @@ class MovimientoCajaActivity : AppCompatActivity() {
         with(binding) {
             if (indexConceptoMC == -1) {
                 valid = false
-                activateError(tiConceptoMovCaja)
+                activateTextInputError(tiConceptoMovCaja)
             }
             if (indexMetodoPago == -1) {
                 valid = false
-                activateError(tiMetodoPago)
+                activateTextInputError(tiMetodoPago)
             }
             if (edtMonto.text!!.isEmpty() || edtMonto.text!!.toString() == "0" || edtMonto.text.toString() == ".") {
-                activateError(tiMonto, "monto no válido")
+                activateTextInputError(tiMonto, "monto no válido")
             }
             if (edtDescripcion.text!!.isEmpty()) {
-                activateError(tiDescripcion, "debe escribir una descripción")
+                activateTextInputError(tiDescripcion, "debe escribir una descripción")
             }
             if (cliente == null && proveedor == null && usuario == null) {
                 valid = false
@@ -203,9 +203,5 @@ class MovimientoCajaActivity : AppCompatActivity() {
         }
         return valid
 
-    }
-
-    private fun activateError(til: TextInputLayout, error: String = "campo abligatorio") {
-        til.error = error
     }
 }

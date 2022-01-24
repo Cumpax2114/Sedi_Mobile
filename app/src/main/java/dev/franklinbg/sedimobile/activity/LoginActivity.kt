@@ -45,8 +45,8 @@ class LoginActivity : AppCompatActivity() {
                             text = "Espere un momento . . ."
                             isEnabled = false
                         }
-                        edtEmail.isEnabled=false
-                        edtPassword.isEnabled=false
+                        tiEmail.isEnabled = false
+                        tiPassword.isEnabled = false
                         Handler(Looper.getMainLooper()).postDelayed({
                             viewModel.login(edtEmail.text.toString(), edtPassword.text.toString())
                                 .observe(this@LoginActivity) {
@@ -76,8 +76,8 @@ class LoginActivity : AppCompatActivity() {
                                         text = "Iniciar Sesión"
                                         isEnabled = true
                                     }
-                                    edtEmail.isEnabled=true
-                                    edtPassword.isEnabled=true
+                                    tiEmail.isEnabled = true
+                                    tiPassword.isEnabled = true
                                 }
                         }, 3000)
                     }

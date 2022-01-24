@@ -201,12 +201,12 @@ class RegistrarClienteDialog : DialogFragment() {
                         telefono = edtTelefono.text.toString()
                     }
                 }
-                viewModel.save(c).observe(viewLifecycleOwner, {
+                viewModel.save(c).observe(viewLifecycleOwner) {
                     Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                     if (it.rpta == 1) {
                         dismiss()
                     }
-                })
+                }
             }
         } else {
             if (validated) {
@@ -221,12 +221,12 @@ class RegistrarClienteDialog : DialogFragment() {
                             telefono = edtTelefono.text.toString()
                         }
                     }
-                    viewModel.save(c).observe(viewLifecycleOwner, {
+                    viewModel.save(c).observe(viewLifecycleOwner) {
                         Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                         if (it.rpta == 1) {
                             dismiss()
                         }
-                    })
+                    }
                 } else {
                     activateTextInputError(binding.tiTelefono)
                 }
@@ -288,6 +288,7 @@ class RegistrarClienteDialog : DialogFragment() {
             edtUbigeo.setText("${data.ubigeo[0]},${data.ubigeo[1]},${data.ubigeo[2]}")
         }
     }
+
     private fun changeFieldStatus(status: Boolean) {
         with(binding) {
             tiNombres.isEnabled = status
