@@ -19,8 +19,8 @@ class ConfigApi private constructor() {
         var metodoPagoApi: MetodoPagoApi
         var proveedorApi: ProveedorApi
         var conceptoMovCajaApi: ConceptoMovCajaApi
-        var tipoControApi: ControApi
-
+        var tipoControApi: TipoContratoApi
+var contratoApi:ContratoApi
         init {
             val gson = GsonBuilder()
                 .registerTypeAdapter(Date::class.java, DateSerializer())
@@ -39,7 +39,8 @@ class ConfigApi private constructor() {
             metodoPagoApi = retrofit.create(MetodoPagoApi::class.java)
             proveedorApi = retrofit.create(ProveedorApi::class.java)
             conceptoMovCajaApi = retrofit.create(ConceptoMovCajaApi::class.java)
-            tipoControApi = retrofit.create(ControApi::class.java)
+            tipoControApi = retrofit.create(TipoContratoApi::class.java)
+            contratoApi=retrofit.create(ContratoApi::class.java)
         }
 
         private fun getClient(): OkHttpClient {

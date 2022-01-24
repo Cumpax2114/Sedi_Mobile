@@ -111,13 +111,14 @@ class ReportesActivity : AppCompatActivity() {
     private fun downLoadPDF() {
         binding.btnExport.isEnabled = false
         binding.btnExport.text = "Espera un momento . . ."
-        binding.cbofechaApertura.isEnabled = false
+        binding.tifechaApertura.isEnabled = false
         val sdf = SimpleDateFormat("dd/MM/yyyy", Locale.ENGLISH)
         viewModel.export(currentCaja.id, sdf.format(fechaApertura)).observe(this) {
             if (it.rpta == 1) {
                 if (it.rpta == 1) {
                     binding.btnExport.isEnabled = true
                     binding.btnExport.text = "Generar PDF"
+                    binding.tifechaApertura.isEnabled = true
                     try {
                         var folderCreated = true
                         val path =

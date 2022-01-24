@@ -14,6 +14,7 @@ import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import dev.franklinbg.sedimobile.databinding.FragmentContratoBinding
 import dev.franklinbg.sedimobile.model.Cliente
+import dev.franklinbg.sedimobile.model.Contrato
 import dev.franklinbg.sedimobile.model.TipoContrato
 import dev.franklinbg.sedimobile.utils.DecimalDigitsInputFilter
 import dev.franklinbg.sedimobile.utils.UsuarioContainer
@@ -21,7 +22,7 @@ import dev.franklinbg.sedimobile.utils.activateTextInputError
 import dev.franklinbg.sedimobile.viewmodel.CajaViewModel
 import dev.franklinbg.sedimobile.viewmodel.ClienteViewModel
 import dev.franklinbg.sedimobile.viewmodel.ContratoViewModel
-import dev.franklinbg.sedimobile.viewmodel.UsuarioViewModel
+import dev.franklinbg.sedimobile.viewmodel.TipoContratoViewModel
 import java.text.DecimalFormat
 import java.text.ParseException
 import java.text.SimpleDateFormat
@@ -31,6 +32,7 @@ import kotlin.collections.ArrayList
 class ContratoFragment : Fragment() {
     private lateinit var binding: FragmentContratoBinding
     private lateinit var viewModel: ContratoViewModel
+    private lateinit var tipoContratoViewModel: TipoContratoViewModel
     private lateinit var cajaViewModel: CajaViewModel
     private lateinit var clienteViewModel: ClienteViewModel
     private lateinit var adapter: ArrayAdapter<TipoContrato>
@@ -73,9 +75,10 @@ class ContratoFragment : Fragment() {
     ): View {
         binding = FragmentContratoBinding.inflate(inflater, container, false)
         val vmp = ViewModelProvider(this)
-        viewModel = vmp[ContratoViewModel::class.java]
+        tipoContratoViewModel = vmp[TipoContratoViewModel::class.java]
         clienteViewModel = vmp[ClienteViewModel::class.java]
         cajaViewModel = vmp[CajaViewModel::class.java]
+        viewModel = vmp[ContratoViewModel::class.java]
         initListeners()
         initAdapter()
         loadData()
@@ -101,16 +104,21 @@ class ContratoFragment : Fragment() {
                 .observe(viewLifecycleOwner) {
                     if (it.rpta == 1) {
                         if (it.body!!.estado == 'A') {
-                            viewModel.listTiposActivos().observe(viewLifecycleOwner) { gRes ->
-                                if (gRes.rpta == 1) {
-                                    tipos.clear()
-                                    tipos.addAll(gRes.body!!)
-                                    adapter.notifyDataSetChanged()
-                                } else {
-                                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT)
-                                        .show()
+                            tipoContratoViewModel.listTiposActivos()
+                                .observe(viewLifecycleOwner) { gRes ->
+                                    if (gRes.rpta == 1) {
+                                        tipos.clear()
+                                        tipos.addAll(gRes.body!!)
+                                        adapter.notifyDataSetChanged()
+                                    } else {
+                                        Toast.makeText(
+                                            requireContext(),
+                                            it.message,
+                                            Toast.LENGTH_SHORT
+                                        )
+                                            .show()
+                                    }
                                 }
-                            }
                             clienteViewModel.listAll().observe(viewLifecycleOwner) { gRes ->
                                 if (gRes.rpta == 1) {
                                     clientes.clear()
@@ -236,12 +244,45 @@ class ContratoFragment : Fragment() {
                 }
             }
             btnSave.setOnClickListener {
-                validate()
+                if (validate()) {
+                    val contrato = Contrato()
+                    val simpleDateFormat = SimpleDateFormat("dd-MM-yyyy", Locale.US)
+                    contrato.apply {
+                        tipoContrato = tipos[indexTipoContrato]
+                        cliente = clientes[indexCliente]
+                        fechaInicio =
+                            java.sql.Date(simpleDateFormat.parse(dpFechaInicio.text.toString()).time)
+                        fechaTermino =
+                            java.sql.Date(simpleDateFormat.parse(dpFechaFin.text.toString()).time)
+                        totalContrato = edtTotal.text!!.toString().toDouble()
+                        cuotaMensual = edtTotalCuota.text!!.toString().toDouble()
+                        totalCuotas = cantCuotas
+                        cuotasPagadas = 0
+                        estado = 'P'
+                    }
+                    viewModel.save(contrato).observe(viewLifecycleOwner) {
+                        if (it.rpta == 1) {
+                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
+                            clearFields()
+                        } else {
+                            Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
+                        }
+                    }
+                }
             }
         }
     }
 
-    fun validate(): Boolean {
+    private fun clearFields() {
+        with(binding) {
+            dpFechaInicio.text!!.clear()
+            dpFechaFin.text!!.clear()
+            edtTotal.text!!.clear()
+            edtTotalCuota.text!!.clear()
+        }
+    }
+
+    private fun validate(): Boolean {
         var valid = true
         if (indexTipoContrato == -1) {
             valid = false
@@ -262,6 +303,21 @@ class ContratoFragment : Fragment() {
         if (binding.edtTotal.text!!.isEmpty()) {
             valid = false
             activateTextInputError(binding.tiTotal, "Ingrese un monto")
+        }
+        if (binding.dpFechaInicio.text!!.isNotEmpty() && binding.dpFechaFin.text!!.isNotEmpty()) {
+            var fechaInicio: Date
+            var fechaFin: Date
+            SimpleDateFormat("dd-MM-yyyy", Locale.US).let {
+                fechaInicio = it.parse(binding.dpFechaInicio.text!!.toString())
+                fechaFin = it.parse(binding.dpFechaFin.text!!.toString())
+                if (fechaFin.before(fechaInicio)) {
+                    valid = false
+                    activateTextInputError(
+                        binding.tiFechaFin,
+                        "la fecha de término debe estar después de la fecha de inicio"
+                    )
+                }
+            }
         }
         if (cantCuotas == -1) {
             valid = false

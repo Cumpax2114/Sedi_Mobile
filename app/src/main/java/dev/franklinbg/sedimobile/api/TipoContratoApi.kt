@@ -5,11 +5,11 @@ import dev.franklinbg.sedimobile.utils.GenericResponse
 import retrofit2.Call
 import retrofit2.http.GET
 
-interface ControApi {
+interface TipoContratoApi {
     companion object {
-        const val base = "rest/contrato"
+        const val base = "rest/tipoContrato"
     }
 
-    @GET("${base}/tipo")
+    @GET(base)
     fun listActivos(): Call<GenericResponse<ArrayList<TipoContrato>>>
 }

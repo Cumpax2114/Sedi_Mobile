@@ -4,6 +4,8 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
+import android.os.Handler
+import android.os.Looper
 import android.view.View
 import android.view.inputmethod.EditorInfo
 import android.view.inputmethod.InputMethodManager
@@ -15,6 +17,7 @@ import com.google.android.material.textfield.TextInputLayout
 import dev.franklinbg.sedimobile.databinding.ActivityLoginBinding
 import dev.franklinbg.sedimobile.utils.UsuarioContainer
 import dev.franklinbg.sedimobile.utils.activateTextInputError
+import dev.franklinbg.sedimobile.utils.hayRed
 import dev.franklinbg.sedimobile.viewmodel.UsuarioViewModel
 import java.util.regex.Pattern
 
@@ -36,18 +39,58 @@ class LoginActivity : AppCompatActivity() {
     private fun initListeners() {
         with(binding) {
             btnIniciarSesion.setOnClickListener {
-                if (validate()) {
-                    viewModel.login(edtEmail.text.toString(), edtPassword.text.toString())
-                        .observe(this@LoginActivity, {
-                            Toast.makeText(this@LoginActivity, it.message, Toast.LENGTH_SHORT)
-                                .show()
-                            if (it.rpta == 1) {
-                                UsuarioContainer.currentUser = it.body
-                                startActivity(Intent(this@LoginActivity, HomeActivity::class.java))
-                            }
-                        })
+                if (hayRed(this@LoginActivity)) {
+                    if (validate()) {
+                        with(btnIniciarSesion) {
+                            text = "Espere un momento . . ."
+                            isEnabled = false
+                        }
+                        edtEmail.isEnabled=false
+                        edtPassword.isEnabled=false
+                        Handler(Looper.getMainLooper()).postDelayed({
+                            viewModel.login(edtEmail.text.toString(), edtPassword.text.toString())
+                                .observe(this@LoginActivity) {
+                                    Toast.makeText(
+                                        this@LoginActivity,
+                                        it.message,
+                                        Toast.LENGTH_SHORT
+                                    )
+                                        .show()
+                                    if (it.rpta == 1) {
+                                        UsuarioContainer.currentUser = it.body
+                                        startActivity(
+                                            Intent(
+                                                this@LoginActivity,
+                                                HomeActivity::class.java
+                                            )
+                                        )
+                                    } else {
+                                        Toast.makeText(
+                                            this@LoginActivity,
+                                            it.message,
+                                            Toast.LENGTH_SHORT
+                                        )
+                                            .show()
+                                    }
+                                    with(btnIniciarSesion) {
+                                        text = "Iniciar Sesión"
+                                        isEnabled = true
+                                    }
+                                    edtEmail.isEnabled=true
+                                    edtPassword.isEnabled=true
+                                }
+                        }, 3000)
+                    }
+                } else {
+                    Toast.makeText(
+                        this@LoginActivity,
+                        "No tienes conexión a internet",
+                        Toast.LENGTH_SHORT
+                    ).show()
                 }
             }
+
+
             addTextWatcher(edtEmail, tiEmail)
             addTextWatcher(edtPassword, tiPassword)
             edtPassword.setOnEditorActionListener { _, i, _ ->
