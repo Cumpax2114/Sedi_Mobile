@@ -15,6 +15,10 @@
         android:theme="@style/Theme.App"
         android:usesCleartextTraffic="true">
         <activity
+            android:name=".activity.MovimientosCajaActivity"
+            android:exported="false"
+            android:screenOrientation="portrait" />
+        <activity
             android:name=".activity.VisorPDFActivity"
             android:exported="false"
             android:screenOrientation="portrait" />

@@ -38,4 +38,7 @@ interface CajaApi {
 
     @PUT("${base}/close/{idCaja}")
     fun close(@Path("idCaja") idCaja: Int): Call<GenericResponse<ArrayList<DetalleCaja>>>
+
+    @GET("${base}/movimientos/{idCaja}")
+    fun getMovimientosByCajaId(@Path("idCaja") idCaja: Int): Call<GenericResponse<ArrayList<MovCaja>>>
 }

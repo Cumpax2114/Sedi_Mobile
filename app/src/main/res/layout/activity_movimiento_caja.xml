@@ -17,7 +17,8 @@
             android:layout_width="match_parent"
             android:layout_height="?attr/actionBarSize"
             android:background="?attr/colorPrimary"
-            app:title="Movimiento de caja"
+            app:menu="@menu/menu_mov_caja"
+            app:title="Movimiento"
             app:titleCentered="true" />
     </com.google.android.material.appbar.AppBarLayout>
 
@@ -32,6 +33,7 @@
             android:layout_height="wrap_content"
             android:layout_margin="10dp"
             android:orientation="vertical">
+
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
@@ -91,6 +93,7 @@
                     android:layout_height="wrap_content"
                     android:inputType="none" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tiMonto"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
@@ -100,11 +103,12 @@
 
                 <com.google.android.material.textfield.TextInputEditText
                     android:id="@+id/edtMonto"
-                    android:maxLength="4"
                     android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:inputType="numberDecimal" />
+                    android:inputType="numberDecimal"
+                    android:maxLength="4" />
             </com.google.android.material.textfield.TextInputLayout>
+
             <com.google.android.material.textfield.TextInputLayout
                 android:id="@+id/tiDescripcion"
                 style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"

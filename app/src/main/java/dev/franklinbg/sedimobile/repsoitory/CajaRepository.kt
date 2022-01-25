@@ -188,4 +188,30 @@ class CajaRepository {
             })
         return mld
     }
+
+    fun getMovimientosByCajaId(idCaja: Int): LiveData<GenericResponse<ArrayList<MovCaja>>> {
+        val mld = MutableLiveData<GenericResponse<ArrayList<MovCaja>>>()
+        api.getMovimientosByCajaId(idCaja)
+            .enqueue(object : Callback<GenericResponse<ArrayList<MovCaja>>> {
+                override fun onResponse(
+                    call: Call<GenericResponse<ArrayList<MovCaja>>>,
+                    response: Response<GenericResponse<ArrayList<MovCaja>>>
+                ) {
+                    mld.value = response.body()
+                }
+
+                override fun onFailure(
+                    call: Call<GenericResponse<ArrayList<MovCaja>>>,
+                    t: Throwable
+                ) {
+                    mld.value = GenericResponse(
+                        TIPO_DATA,
+                        RPTA_ERROR,
+                        "internal exception: no se ha podido listar los movimientos de caja:${t.message!!}"
+                    )
+                }
+
+            })
+        return mld;
+    }
 }

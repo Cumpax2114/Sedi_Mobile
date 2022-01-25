@@ -31,4 +31,7 @@ class CajaViewModel : ViewModel() {
 
     fun getCurrentDetails(idCaja: Int): LiveData<GenericResponse<ArrayList<DetalleCaja>>> =
         repository.getCurrentDetails(idCaja)
+
+    fun getMovimientosByCajaId(idCaja: Int): LiveData<GenericResponse<ArrayList<MovCaja>>> =
+        repository.getMovimientosByCajaId(idCaja)
 }

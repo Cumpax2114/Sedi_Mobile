@@ -14,6 +14,7 @@
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/activity_home.xml" value="0.36666666666666664" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/activity_login.xml" value="0.365625" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/activity_movimiento_caja.xml" value="0.36666666666666664" />
+        <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/activity_movimientos_caja.xml" value="0.35260416666666666" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/activity_reportes.xml" value="0.36666666666666664" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/activity_visor_pdf.xml" value="0.36666666666666664" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/app_bar_main.xml" value="0.36102564102564105" />
@@ -34,12 +35,14 @@
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/item_detalle_caja.xml" value="0.36666666666666664" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/item_metodo_pago.xml" value="0.36666666666666664" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/item_monto.xml" value="0.36666666666666664" />
+        <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/item_movimiento_caja.xml" value="0.44644549763033176" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/item_proveedor_mov_caja.xml" value="0.36666666666666664" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/item_trabajador_mov_caja.xml" value="0.36666666666666664" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/nav_header_main.xml" value="0.33" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/menu/activity_main_drawer.xml" value="0.3703125" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/menu/main.xml" value="0.20572916666666666" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/menu/menu_clientes.xml" value="0.36666666666666664" />
+        <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/menu/menu_mov_caja.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>

@@ -1,11 +1,13 @@
 package dev.franklinbg.sedimobile.activity
 
+import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.core.widget.addTextChangedListener
 import androidx.lifecycle.ViewModelProvider
+import dev.franklinbg.sedimobile.R
 import dev.franklinbg.sedimobile.databinding.ActivityMovimientoCajaBinding
 import dev.franklinbg.sedimobile.dialog.SeleccionePersonaDialog
 import dev.franklinbg.sedimobile.model.Caja
@@ -43,6 +45,20 @@ class MovimientoCajaActivity : AppCompatActivity() {
 
     private fun initListeners() {
         with(binding) {
+            toolbar.setOnMenuItemClickListener {
+                when (it.itemId) {
+                    R.id.action_ver_movs_caja -> {
+                        Intent(
+                            this@MovimientoCajaActivity,
+                            MovimientosCajaActivity::class.java
+                        ).apply {
+                            putExtra("idCaja", currentCaja.id)
+                            startActivity(this)
+                        }
+                    }
+                }
+                return@setOnMenuItemClickListener false
+            }
             btnSelectPerson.setOnClickListener {
                 SeleccionePersonaDialog().show(supportFragmentManager, "")
             }

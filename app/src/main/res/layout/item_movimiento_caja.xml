@@ -1,15 +1,14 @@
 <?xml version="1.0" encoding="utf-8"?>
 <com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:id="@+id/item_cliente"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:layout_marginStart="5dp"
-    app:cardElevation="8dp"
     android:layout_marginTop="10dp"
     android:layout_marginEnd="5dp"
     android:layout_marginBottom="12dp"
-    android:orientation="vertical">
+    android:orientation="vertical"
+    app:cardElevation="8dp">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -31,14 +30,14 @@
                     android:id="@+id/tvEstado"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:text="ACTIVO"
+                    android:text="PAGADO"
                     android:textColor="#fff"
                     android:textSize="15sp" />
             </LinearLayout>
         </com.google.android.material.card.MaterialCardView>
 
         <LinearLayout
-            android:id="@+id/linearNombre"
+            android:id="@+id/linearCMC"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="30dp"
@@ -50,23 +49,97 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="15dp"
-                android:text="Nombre:"
+                android:text="Concepto:"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvNombre"
+                android:id="@+id/tvCMC"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Text"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearTipoMov"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linearCMC"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="15dp"
+                android:text="Tipo movimiento:"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvTipoMov"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="Entrada"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearMetodoPago"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linearTipoMov"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="15dp"
+                android:text="Método de pago:"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvMetodoPago"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="efectivo"
+                android:textSize="15sp" />
+        </LinearLayout>
+
+        <LinearLayout
+            android:id="@+id/linearPersona"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@id/linearMetodoPago"
+            android:layout_marginBottom="10dp"
+            android:orientation="horizontal">
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginStart="16dp"
+                android:layout_marginEnd="15dp"
+                android:text="Persona:"
+                android:textSize="16sp"
+                android:textStyle="bold" />
+
+            <TextView
+                android:id="@+id/tvPersona"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:text="Franklin Bueno ginzales"
                 android:textSize="15sp" />
         </LinearLayout>
-
         <LinearLayout
-            android:id="@+id/linearTelefono"
+            android:id="@+id/linearTotal"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_below="@id/linearNombre"
+            android:layout_below="@id/linearPersona"
             android:layout_marginBottom="10dp"
             android:orientation="horizontal">
 
@@ -75,41 +148,27 @@
                 android:layout_height="wrap_content"
                 android:layout_marginStart="16dp"
                 android:layout_marginEnd="15dp"
-                android:text="Teléfono:"
+                android:text="Total:"
                 android:textSize="16sp"
                 android:textStyle="bold" />
 
             <TextView
-                android:id="@+id/tvTelefono"
+                android:id="@+id/tvTotal"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="970778767"
+                android:text="S/0.00"
                 android:textSize="15sp" />
         </LinearLayout>
-
-        <LinearLayout
-            android:id="@+id/linearDireccion"
-            android:layout_width="match_parent"
+        <Button
+            android:id="@+id/btnAnular"
+            android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_below="@id/linearTelefono"
-            android:layout_marginBottom="10dp"
-            android:orientation="horizontal">
-
-            <TextView
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="16dp"
-                android:layout_marginEnd="15dp"
-                android:text="Direccion:"
-                android:textSize="16sp"
-                android:textStyle="bold" />
-
-            <TextView
-                android:id="@+id/tvDieccion"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text="Oscar Cumpa Veintimilla"
-                android:textSize="15sp" />
-        </LinearLayout>
+            android:layout_below="@id/linearTotal"
+            android:layout_centerHorizontal="true"
+            android:alpha="0.5"
+            android:backgroundTint="@color/red"
+            android:enabled="false"
+            android:text="Anular"
+            android:textColor="@color/white" />
     </RelativeLayout>
 </com.google.android.material.card.MaterialCardView>
