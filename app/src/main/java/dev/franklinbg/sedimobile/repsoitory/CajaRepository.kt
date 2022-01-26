@@ -214,4 +214,26 @@ class CajaRepository {
             })
         return mld;
     }
+
+    fun anularMovimiento(id: Int): LiveData<GenericResponse<MovCaja>> {
+        val mld = MutableLiveData<GenericResponse<MovCaja>>()
+        api.anularMovimiento(id).enqueue(object : Callback<GenericResponse<MovCaja>> {
+            override fun onResponse(
+                call: Call<GenericResponse<MovCaja>>,
+                response: Response<GenericResponse<MovCaja>>
+            ) {
+                mld.value = response.body()
+            }
+
+            override fun onFailure(call: Call<GenericResponse<MovCaja>>, t: Throwable) {
+                mld.value = GenericResponse(
+                    TIPO_DATA,
+                    RPTA_ERROR,
+                    "internal exception: no se ha podido anular el movimiento de caja:${t.message!!}"
+                )
+            }
+
+        })
+        return mld
+    }
 }

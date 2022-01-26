@@ -41,4 +41,7 @@ interface CajaApi {
 
     @GET("${base}/movimientos/{idCaja}")
     fun getMovimientosByCajaId(@Path("idCaja") idCaja: Int): Call<GenericResponse<ArrayList<MovCaja>>>
+
+    @DELETE("${base}/movimiento/{id}")
+    fun anularMovimiento(@Path("id") id: Int): Call<GenericResponse<MovCaja>>
 }
