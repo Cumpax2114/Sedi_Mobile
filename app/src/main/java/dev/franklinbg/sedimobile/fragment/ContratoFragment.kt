@@ -1,5 +1,6 @@
 package dev.franklinbg.sedimobile.fragment
 
+import android.content.Intent
 import android.os.Bundle
 import androidx.fragment.app.Fragment
 import android.view.LayoutInflater
@@ -13,6 +14,9 @@ import com.google.android.material.datepicker.CalendarConstraints
 import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dev.franklinbg.sedimobile.R
+import dev.franklinbg.sedimobile.activity.ContratosActivity
+import dev.franklinbg.sedimobile.activity.HomeActivity
 import dev.franklinbg.sedimobile.databinding.FragmentContratoBinding
 import dev.franklinbg.sedimobile.model.Cliente
 import dev.franklinbg.sedimobile.model.Contrato
@@ -84,6 +88,26 @@ class ContratoFragment : Fragment() {
         initAdapter()
         loadData()
         return binding.root
+    }
+
+    override fun onStart() {
+        super.onStart()
+        (requireActivity() as HomeActivity).setMenuToolbar(R.menu.menu_contrato) {
+            when (it.itemId) {
+                R.id.itemListContratos -> startActivity(
+                    Intent(
+                        requireContext(),
+                        ContratosActivity::class.java
+                    )
+                )
+            }
+            false
+        }
+    }
+
+    override fun onPause() {
+        super.onPause()
+        (requireActivity() as HomeActivity).clearMenu()
     }
 
     private fun initAdapter() {

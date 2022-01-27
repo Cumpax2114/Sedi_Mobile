@@ -3,17 +3,16 @@ package dev.franklinbg.sedimobile.activity
 import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.TextView
-import androidx.drawerlayout.widget.DrawerLayout
+import androidx.appcompat.widget.Toolbar
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.navigateUp
 import androidx.navigation.ui.setupActionBarWithNavController
 import androidx.navigation.ui.setupWithNavController
 import cn.pedant.SweetAlert.SweetAlertDialog
-import com.google.android.material.navigation.NavigationView
+
 import dev.franklinbg.sedimobile.R
 import dev.franklinbg.sedimobile.databinding.ActivityHomeBinding
-import dev.franklinbg.sedimobile.dialog.RegistrarClienteDialog
 import dev.franklinbg.sedimobile.utils.UsuarioContainer
 
 class HomeActivity : AppCompatActivity() {
@@ -81,17 +80,9 @@ class HomeActivity : AppCompatActivity() {
             }.show()
     }
 
-    fun setMenuToolbar(menuId: Int) {
+    fun setMenuToolbar(menuId: Int, listener: Toolbar.OnMenuItemClickListener) {
         binding.appBarMain.toolbar.inflateMenu(menuId)
-        binding.appBarMain.toolbar.setOnMenuItemClickListener {
-            when (it.itemId) {
-                R.id.itemNewClient -> {
-                    RegistrarClienteDialog().show(supportFragmentManager, "")
-                    return@setOnMenuItemClickListener true
-                }
-            }
-            return@setOnMenuItemClickListener false
-        }
+        binding.appBarMain.toolbar.setOnMenuItemClickListener(listener)
     }
 
     fun clearMenu() = binding.appBarMain.toolbar.menu.clear()

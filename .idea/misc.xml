@@ -11,6 +11,7 @@
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/drawable/side_nav_bar.xml" value="0.12962962962962962" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/activity_abrir_caja.xml" value="0.25" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/activity_caja.xml" value="0.36666666666666664" />
+        <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/activity_contratos.xml" value="0.3625" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/activity_home.xml" value="0.36666666666666664" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/activity_login.xml" value="0.365625" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/activity_movimiento_caja.xml" value="0.36666666666666664" />
@@ -32,6 +33,7 @@
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/item_caja_fragment.xml" value="0.365625" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/item_cliente.xml" value="0.5728429985855729" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/item_cliente_mov_caja.xml" value="0.36666666666666664" />
+        <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/item_contrato.xml" value="0.3625" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/item_detalle_caja.xml" value="0.36666666666666664" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/item_metodo_pago.xml" value="0.36666666666666664" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/layout/item_monto.xml" value="0.36666666666666664" />
@@ -42,11 +44,13 @@
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/menu/activity_main_drawer.xml" value="0.3703125" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/menu/main.xml" value="0.20572916666666666" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/menu/menu_clientes.xml" value="0.36666666666666664" />
+        <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/menu/menu_contarto.xml" value="0.3625" />
+        <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/menu/menu_contrato.xml" value="0.3625" />
         <entry key="..\:/franklin_sedi/Sedi_Mobile/app/src/main/res/menu/menu_mov_caja.xml" value="0.36666666666666664" />
       </map>
     </option>
   </component>
-  <component name="ProjectRootManager" version="2" languageLevel="JDK_1_8" project-jdk-name="jbr-11" project-jdk-type="JavaSDK">
+  <component name="ProjectRootManager" version="2" languageLevel="JDK_11" default="true" project-jdk-name="11" project-jdk-type="JavaSDK">
     <output url="file://$PROJECT_DIR$/build/classes" />
   </component>
   <component name="ProjectType">

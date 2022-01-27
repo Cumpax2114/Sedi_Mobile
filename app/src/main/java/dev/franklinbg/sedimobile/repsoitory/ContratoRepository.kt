@@ -13,6 +13,28 @@ import retrofit2.Response
 
 class ContratoRepository {
     val api = ConfigApi.contratoApi
+    fun listAll(): LiveData<GenericResponse<ArrayList<Contrato>>> {
+        val mld = MutableLiveData<GenericResponse<ArrayList<Contrato>>>()
+        api.listAll().enqueue(object : Callback<GenericResponse<ArrayList<Contrato>>> {
+            override fun onResponse(
+                call: Call<GenericResponse<ArrayList<Contrato>>>,
+                response: Response<GenericResponse<ArrayList<Contrato>>>
+            ) {
+                mld.value = response.body()
+            }
+
+            override fun onFailure(call: Call<GenericResponse<ArrayList<Contrato>>>, t: Throwable) {
+                mld.value = GenericResponse(
+                    TIPO_RESULT,
+                    RPTA_ERROR,
+                    "internal exception:${t.message!!}",
+                )
+            }
+
+        })
+        return mld;
+    }
+
     fun save(contrato: Contrato): LiveData<GenericResponse<Contrato>> {
         val mld = MutableLiveData<GenericResponse<Contrato>>()
         api.save(contrato).enqueue(object : Callback<GenericResponse<Contrato>> {

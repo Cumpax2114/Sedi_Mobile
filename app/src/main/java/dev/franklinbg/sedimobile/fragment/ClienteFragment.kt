@@ -33,7 +33,16 @@ class ClienteFragment : Fragment() {
 
     override fun onStart() {
         super.onStart()
-        (requireActivity() as HomeActivity).setMenuToolbar(R.menu.menu_clientes)
+        (requireActivity() as HomeActivity).setMenuToolbar(R.menu.menu_clientes) {
+            when(it.itemId){
+                R.id.itemNewClient-> {
+                    RegistrarClienteDialog().show(parentFragmentManager, "")
+                    return@setMenuToolbar true
+                }
+
+            }
+            return@setMenuToolbar false
+        }
     }
 
     override fun onPause() {
@@ -42,13 +51,13 @@ class ClienteFragment : Fragment() {
     }
 
     private fun loadData() {
-        viewModel.listAll().observe(viewLifecycleOwner, {
+        viewModel.listAll().observe(viewLifecycleOwner) {
             if (it.rpta == 1) {
                 adapter.updateItems(it.body!!)
             } else {
                 Toast.makeText(requireContext(), it.message, Toast.LENGTH_LONG).show()
             }
-        })
+        }
     }
 
     private fun initAdapter() {

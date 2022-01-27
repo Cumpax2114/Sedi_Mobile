@@ -8,5 +8,6 @@ import dev.franklinbg.sedimobile.utils.GenericResponse
 
 class ContratoViewModel : ViewModel() {
     val repository = ContratoRepository()
+    fun listAll(): LiveData<GenericResponse<ArrayList<Contrato>>> = repository.listAll()
     fun save(contrato: Contrato): LiveData<GenericResponse<Contrato>> = repository.save(contrato)
 }
