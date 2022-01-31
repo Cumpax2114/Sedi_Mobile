@@ -21,6 +21,52 @@
             app:titleCentered="true" />
     </com.google.android.material.appbar.AppBarLayout>
 
+    <com.google.android.material.card.MaterialCardView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="5dp"
+        android:layout_marginTop="10dp"
+        app:cardElevation="8dp">
+
+        <RelativeLayout
+            android:paddingHorizontal="10dp"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content">
+
+            <TextView
+                android:id="@+id/tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentTop="true"
+                android:layout_centerHorizontal="true"
+                android:text="FILTRO POR APERTURA" />
+
+            <com.google.android.material.textfield.TextInputLayout
+                android:id="@+id/tiAperturas"
+                style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox.Dense.ExposedDropdownMenu"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tv"
+                android:enabled="false"
+                android:hint="Apertura">
+
+                <AutoCompleteTextView
+                    android:id="@+id/cboAperturas"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:inputType="none" />
+            </com.google.android.material.textfield.TextInputLayout>
+
+            <CheckBox
+                android:id="@+id/chkHabilitarFiltro"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_below="@id/tiAperturas"
+                android:layout_alignParentEnd="true"
+                android:text="Habilitado" />
+        </RelativeLayout>
+    </com.google.android.material.card.MaterialCardView>
+
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/rcvMovimientos"
         android:layout_width="match_parent"

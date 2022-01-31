@@ -34,7 +34,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="25dp"
-                android:visibility="gone"
                 app:cardCornerRadius="15dp">
 
                 <LinearLayout
@@ -74,7 +73,6 @@
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_margin="25dp"
-                android:visibility="visible"
                 app:cardCornerRadius="15dp">
 
                 <LinearLayout
@@ -109,6 +107,42 @@
                         android:layout_height="wrap_content"
                         android:layout_gravity="center_horizontal"
                         android:text="Cerrar Caja" />
+                </LinearLayout>
+            </androidx.cardview.widget.CardView>
+
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cardUltimosDetalles"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_margin="25dp"
+                app:cardCornerRadius="15dp">
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="vertical"
+                    android:padding="10dp">
+
+                    <TextView
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:gravity="center|center_horizontal"
+                        android:text="Últimos detalles"
+                        android:textSize="18sp" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_marginBottom="10dp"
+                        android:text="el último cierre de caja se efectuó con los siguientes detalles:\n
+si la lista aparece vacía es probable que esta sea su primera apertura"
+                        android:textColor="@color/yellow" />
+
+                    <androidx.recyclerview.widget.RecyclerView
+                        android:id="@+id/rcvUltimosDetalles"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content" />
                 </LinearLayout>
             </androidx.cardview.widget.CardView>
 

@@ -15,7 +15,7 @@ import com.google.android.material.datepicker.DateValidatorPointForward
 import com.google.android.material.datepicker.MaterialDatePicker
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dev.franklinbg.sedimobile.R
-import dev.franklinbg.sedimobile.activity.ContratosActivity
+import dev.franklinbg.sedimobile.activity.ListarContratosActivity
 import dev.franklinbg.sedimobile.activity.HomeActivity
 import dev.franklinbg.sedimobile.databinding.FragmentContratoBinding
 import dev.franklinbg.sedimobile.model.Cliente
@@ -47,6 +47,7 @@ class ContratoFragment : Fragment() {
     private var cantCuotas = -1
     private var indexTipoContrato = -1
     private var indexCliente = -1
+    private var idCaja = 0
     private val cuotas = arrayOf(
         "1",
         "2",
@@ -94,14 +95,21 @@ class ContratoFragment : Fragment() {
         super.onStart()
         (requireActivity() as HomeActivity).setMenuToolbar(R.menu.menu_contrato) {
             when (it.itemId) {
-                R.id.itemListContratos -> startActivity(
-                    Intent(
+                R.id.itemListContratos -> if (idCaja != 0) {
+                    val intent = Intent(
                         requireContext(),
-                        ContratosActivity::class.java
+                        ListarContratosActivity::class.java
                     )
-                )
+                    intent.putExtra("idCaja", idCaja)
+                    startActivity(intent)
+                    return@setMenuToolbar true
+                }else{
+                    Toast.makeText(requireContext(),"id de caja no encontrado",Toast.LENGTH_SHORT).show()
+                    return@setMenuToolbar false
+                }
+
             }
-            false
+            return@setMenuToolbar false
         }
     }
 
@@ -129,6 +137,7 @@ class ContratoFragment : Fragment() {
                 .observe(viewLifecycleOwner) {
                     if (it.rpta == 1) {
                         if (it.body!!.estado == 'A') {
+                            idCaja = it.body!!.id
                             tipoContratoViewModel.listTiposActivos()
                                 .observe(viewLifecycleOwner) { gRes ->
                                     if (gRes.rpta == 1) {

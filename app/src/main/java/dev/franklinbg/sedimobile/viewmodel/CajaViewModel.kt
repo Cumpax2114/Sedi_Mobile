@@ -37,4 +37,10 @@ class CajaViewModel : ViewModel() {
 
     fun anularMovimiento(id: Int): LiveData<GenericResponse<MovCaja>> =
         repository.anularMovimiento(id)
+
+    fun listMovimientosByAperturaId(idApertura: Int): LiveData<GenericResponse<ArrayList<MovCaja>>> =
+        repository.listMovimientosByAperturaId(idApertura)
+
+    fun listUltimosDetalles(idCaja: Int): LiveData<GenericResponse<ArrayList<DetalleCaja>>> =
+        repository.listUltimosDetalles(idCaja)
 }

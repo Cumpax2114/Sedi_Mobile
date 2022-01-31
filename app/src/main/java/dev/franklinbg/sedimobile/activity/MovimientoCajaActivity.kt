@@ -203,9 +203,11 @@ class MovimientoCajaActivity : AppCompatActivity() {
                 activateTextInputError(tiMetodoPago)
             }
             if (edtMonto.text!!.isEmpty() || edtMonto.text!!.toString() == "0" || edtMonto.text.toString() == ".") {
+                valid=false
                 activateTextInputError(tiMonto, "monto no válido")
             }
             if (edtDescripcion.text!!.isEmpty()) {
+                valid=false
                 activateTextInputError(tiDescripcion, "debe escribir una descripción")
             }
             if (cliente == null && proveedor == null && usuario == null) {

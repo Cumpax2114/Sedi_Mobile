@@ -1,11 +1,12 @@
 package dev.franklinbg.sedimobile.model;
 
+import java.io.Serializable;
 import java.sql.Date;
 
 import dev.franklinbg.sedimobile.model.Cliente;
 import dev.franklinbg.sedimobile.model.TipoContrato;
 
-public class Contrato {
+public class Contrato{
     private int id;
     private TipoContrato tipoContrato;
     private Cliente cliente;

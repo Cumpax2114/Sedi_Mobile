@@ -236,4 +236,55 @@ class CajaRepository {
         })
         return mld
     }
+
+    fun listMovimientosByAperturaId(idApertura: Int): LiveData<GenericResponse<ArrayList<MovCaja>>> {
+        val mld = MutableLiveData<GenericResponse<ArrayList<MovCaja>>>();
+        api.listMovimientosByAperturaId(idApertura)
+            .enqueue(object : Callback<GenericResponse<ArrayList<MovCaja>>> {
+                override fun onResponse(
+                    call: Call<GenericResponse<ArrayList<MovCaja>>>,
+                    response: Response<GenericResponse<ArrayList<MovCaja>>>
+                ) {
+                    mld.value = response.body()
+                }
+
+                override fun onFailure(
+                    call: Call<GenericResponse<ArrayList<MovCaja>>>,
+                    t: Throwable
+                ) {
+                    mld.value = GenericResponse(
+                        TIPO_DATA,
+                        RPTA_ERROR,
+                        "internal exception: no se ha podido obtener el listado:${t.message!!}"
+                    )
+                }
+
+            })
+        return mld;
+    }
+
+    fun listUltimosDetalles(idCaja: Int): LiveData<GenericResponse<ArrayList<DetalleCaja>>> {
+        val mld = MutableLiveData<GenericResponse<ArrayList<DetalleCaja>>>()
+        api.listUltimosDetalles(idCaja)
+            .enqueue(object : Callback<GenericResponse<ArrayList<DetalleCaja>>> {
+                override fun onResponse(
+                    call: Call<GenericResponse<ArrayList<DetalleCaja>>>,
+                    response: Response<GenericResponse<ArrayList<DetalleCaja>>>
+                ) {
+                    mld.value = response.body()
+                }
+
+                override fun onFailure(
+                    call: Call<GenericResponse<ArrayList<DetalleCaja>>>,
+                    t: Throwable
+                ) {
+                    mld.value = GenericResponse(
+                        TIPO_DATA,
+                        RPTA_ERROR,
+                        "internal exception: no se ha podido obtener los últimos detalles de caja:${t.message!!}"
+                    )
+                }
+            })
+        return mld;
+    }
 }

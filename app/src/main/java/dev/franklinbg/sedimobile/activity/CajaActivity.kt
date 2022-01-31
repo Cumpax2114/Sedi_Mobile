@@ -5,6 +5,7 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.core.view.isVisible
 import androidx.lifecycle.ViewModelProvider
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -31,6 +32,7 @@ class CajaActivity : AppCompatActivity(), AddDetailCommunication {
     private lateinit var metodoPagoViewModel: MetodoPagoViewModel
     private lateinit var adapter: MetodosPagoCajaAdapter
     private lateinit var detallesAdapter: DetalleCajaAdapter
+    private lateinit var ultimosDetallesAdapter: DetalleCajaAdapter
     private val detallesApertura = ArrayList<DetalleCaja>()
     private var metodosPago = ArrayList<MetodoPago>()
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -52,6 +54,7 @@ class CajaActivity : AppCompatActivity(), AddDetailCommunication {
     private fun initApdater() {
         adapter = MetodosPagoCajaAdapter(this)
         detallesAdapter = DetalleCajaAdapter()
+        ultimosDetallesAdapter = DetalleCajaAdapter()
         with(binding.rcvDetalles) {
             layoutManager = LinearLayoutManager(this@CajaActivity)
             adapter = detallesAdapter
@@ -59,6 +62,10 @@ class CajaActivity : AppCompatActivity(), AddDetailCommunication {
         with(binding.rcvMTodosPago) {
             layoutManager = LinearLayoutManager(this@CajaActivity)
             adapter = this@CajaActivity.adapter
+        }
+        with(binding.rcvUltimosDetalles) {
+            layoutManager = LinearLayoutManager(this@CajaActivity)
+            adapter = this@CajaActivity.ultimosDetallesAdapter
         }
     }
 
@@ -74,7 +81,14 @@ class CajaActivity : AppCompatActivity(), AddDetailCommunication {
                                 metodosPago = resp.body!!
                                 adapter.updateItems(resp.body!!)
                             } else {
-                                Toast.makeText(this, it.message, Toast.LENGTH_SHORT).show()
+                                Toast.makeText(this, resp.message, Toast.LENGTH_SHORT).show()
+                            }
+                        }
+                        viewModel.listUltimosDetalles(currentCaja!!.id).observe(this) { resp ->
+                            if (resp.rpta == 1) {
+                                ultimosDetallesAdapter.updateItems(resp.body!!)
+                            } else {
+                                Toast.makeText(this, resp.message, Toast.LENGTH_SHORT).show()
                             }
                         }
                     } else {
@@ -106,9 +120,11 @@ class CajaActivity : AppCompatActivity(), AddDetailCommunication {
             tvFechaCierre.text = simpleDatFormat.format(currentCaja!!.fechaCierre)
             if (currentCaja!!.estado == 'C') {
                 cardApertura.visibility = View.VISIBLE
+                cardUltimosDetalles.visibility = View.VISIBLE
                 cardCierre.visibility = View.GONE
             } else {
                 cardApertura.visibility = View.GONE
+                cardUltimosDetalles.visibility = View.GONE
                 cardCierre.visibility = View.VISIBLE
             }
         }
@@ -128,7 +144,7 @@ class CajaActivity : AppCompatActivity(), AddDetailCommunication {
                             val dto = CajaWithDetallesDTO()
                             dto.idCaja = currentCaja!!.id
                             dto.detalles = detallesApertura
-                            viewModel.open(dto).observe(this@CajaActivity, {
+                            viewModel.open(dto).observe(this@CajaActivity) {
                                 if (it.rpta == 1) {
                                     Snackbar.make(
                                         btnChangeCajaStatus.rootView,
@@ -144,7 +160,7 @@ class CajaActivity : AppCompatActivity(), AddDetailCommunication {
                                         Toast.LENGTH_SHORT
                                     ).show()
                                 }
-                            })
+                            }
                         }.setNegativeButton("cancelar") { dialogInterface: DialogInterface, _ ->
                             dialogInterface.dismiss()
                         }.show()
