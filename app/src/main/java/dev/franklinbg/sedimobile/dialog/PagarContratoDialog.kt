@@ -1,5 +1,5 @@
 package dev.franklinbg.sedimobile.dialog
-
+import android.content.DialogInterface
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -10,6 +10,7 @@ import androidx.appcompat.content.res.AppCompatResources
 import androidx.fragment.app.DialogFragment
 import androidx.lifecycle.ViewModelProvider
 import dev.franklinbg.sedimobile.R
+import dev.franklinbg.sedimobile.activity.ListarContratosActivity
 import dev.franklinbg.sedimobile.databinding.DialogPagarContratoBinding
 import dev.franklinbg.sedimobile.model.*
 import dev.franklinbg.sedimobile.viewmodel.CajaViewModel
@@ -30,10 +31,10 @@ class PagarContratoDialog(val idCaja: Int, val contrato: Contrato) : DialogFragm
     private val metodosPago = ArrayList<MetodoPago>()
     private var indexMetodoPago = -1
     private var cuotas = 0
+    private var pagado = false
     private var total by Delegates.observable(0.0) { _: KProperty<*>, _, newValue: Double ->
-        binding.btnPagar.isEnabled = (newValue < montoCierre)
+        binding.btnPagar.isEnabled = (cuotas!=0&&indexMetodoPago!=-1)
     }
-    private var montoCierre = 0.0
     private val detallesCaja = ArrayList<DetalleCaja>()
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -89,9 +90,8 @@ class PagarContratoDialog(val idCaja: Int, val contrato: Contrato) : DialogFragm
         binding.toolbar.setNavigationOnClickListener { dismiss() }
         binding.cboMetodoPago.setOnItemClickListener { _, _, index, _ ->
             indexMetodoPago = index
-            loadMontoActual()
             if (total != 0.0)
-                binding.btnPagar.isEnabled = (total < montoCierre)
+                binding.btnPagar.isEnabled = (cuotas!=0&&indexMetodoPago!=-1)
         }
         binding.cboCuotas.setOnItemClickListener { _, _, index, _ ->
             cuotas = index + 1
@@ -108,23 +108,18 @@ class PagarContratoDialog(val idCaja: Int, val contrato: Contrato) : DialogFragm
                     fechaPago = Date()
                     montoPagado = total / cuotas
                     pagos.add(this)
-                    Toast.makeText(requireContext(), montoPagado.toString(), Toast.LENGTH_SHORT)
-                        .show()
+                }
+            }
+            viewModel.pagar(pagos).observe(viewLifecycleOwner) {
+                if (it.rpta == 1) {
+                    pagado=true
+                    dismiss()
+                } else {
+                    Toast.makeText(requireContext(), it.message, Toast.LENGTH_SHORT).show()
                 }
             }
         }
     }
-
-    private fun loadMontoActual() {
-        for (dc in detallesCaja) {
-            if (dc.metodoPago.id == metodosPago[indexMetodoPago].id) {
-                binding.LinearMontoDisponible.visibility = View.VISIBLE
-                montoCierre = dc.montoCierre
-                binding.tvMontoDisponible.text = "S/${montoCierre}"
-            }
-        }
-    }
-
     private fun calcularTotal() {
         binding.LinearTotalPagar.visibility = View.VISIBLE
         total = cuotas * contrato.cuotaMensual
@@ -151,5 +146,12 @@ class PagarContratoDialog(val idCaja: Int, val contrato: Contrato) : DialogFragm
         viewModel = vmp[ContratoViewModel::class.java]
         metodoPagoViewModel = vmp[MetodoPagoViewModel::class.java]
         cajaViewModel = vmp[CajaViewModel::class.java]
+    }
+
+    override fun onDismiss(dialog: DialogInterface) {
+        if (pagado) {
+            (requireActivity() as ListarContratosActivity).loadData()
+        }
+        super.onDismiss(dialog)
     }
 }

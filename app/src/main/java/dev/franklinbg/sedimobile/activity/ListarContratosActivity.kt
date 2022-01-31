@@ -33,7 +33,7 @@ class ListarContratosActivity : AppCompatActivity(), ContratoCommunication {
         }
     }
 
-    private fun loadData() {
+    fun loadData() {
         viewModel.listAll().observe(this) {
             if (it.rpta == 1) {
                 adapter.updateItems(it.body!!)

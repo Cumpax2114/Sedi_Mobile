@@ -38,8 +38,12 @@ class ContratoAdapter(val communication: ContratoCommunication) :
                 tvFechaInicio.text = sdf.format(contrato.fechaInicio)
                 tvFechaFin.text = sdf.format(contrato.fechaTermino)
                 tvTotal.text = contrato.totalContrato.toString()
-                tvCuotas.text = contrato.cuotaMensual.toString()
+                tvCuotas.text = contrato.totalCuotas.toString()
                 tvCliente.text = contrato.cliente.nombre
+                if (contrato.totalCuotas == contrato.cuotasPagadas) {
+                    btnPagar.isEnabled = false
+                    btnPagar.text = "se terminó de pagar"
+                }
                 btnPagar.setOnClickListener {
                     communication.pagar(contrato)
                 }
